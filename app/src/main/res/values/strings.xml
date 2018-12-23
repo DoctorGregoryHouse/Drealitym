@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Drealitym</string>
+    <string name="add_dream_title">ADD DREAM</string>
+    <string name="add_dream_edit_text_head">Write down your dream...</string>
+    <string name="add_dream_edit_text_title">Dream title</string>
+    <string name="toast_empty">Please enter a title</string>
+    <string name="toast_not_empty">Entry saved</string>
+    <string name="reminders_activate_alarm">Turn on alarm in general</string>
+
+
+    <string-array name="dream_type_spinner_array">
+        <item>normal dream</item>
+        <item>pre-lucid dream</item>
+        <item>lucid dream</item>
+    </string-array>
+</resources>
