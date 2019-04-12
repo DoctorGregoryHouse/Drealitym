@@ -17,12 +17,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //hide actionBar
+        if (getSupportActionBar() != null){
+            getSupportActionBar().hide();
+        }
+
         //TODO: IMPLEMENT FONTCHANGER
         //   https://stackoverflow.com/questions/2973270/using-a-custom-typeface-in-android/16275257#16275257
 
-        final Button addDreamBtn =  (Button) findViewById(R.id.add_dream_button);
-        final Button myDiaryBtn = (Button) findViewById(R.id.my_diary_button);
-        final Button remindersBtn = (Button) findViewById(R.id.reminders_button);
+        final Button addDreamBtn =   findViewById(R.id.add_dream_button);
+        final Button myDiaryBtn =  findViewById(R.id.my_diary_intent_button);
+        final Button remindersBtn = findViewById(R.id.reminders_button);
         Button settingsBtn = new Button(this);
 
         addDreamBtn.setOnClickListener(new View.OnClickListener() {

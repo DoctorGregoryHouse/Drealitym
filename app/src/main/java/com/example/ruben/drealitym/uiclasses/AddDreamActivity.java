@@ -1,10 +1,12 @@
 package com.example.ruben.drealitym.uiclasses;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.AsyncTask;
@@ -37,26 +39,25 @@ import java.util.Date;
 
 public class AddDreamActivity extends AppCompatActivity {
 
+    private static final String LOG_TAG = "AddDreamActivity";
+
+
+    //Helper for Database
     DreamDbHelper mDbHelper = new DreamDbHelper(this);
+
+    //
     Spinner typeSpinner;
     int type;
-
     private static String sDate;
 
     //Pfad für die Audio-Datei
     private static String mFileName = null;
-
-    //region VariablesAudio
-
-    private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
-
-    private static final String LOG_TAG = "AddDreamActivity";
-
+    //Media Players
     private MediaRecorder mRecorder = null;
-
     private MediaPlayer mPlayer = null;
 
-
+    //variables to get the permission for the microphone
+    private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private boolean permissionToRecordAccepted = false;
     private String[] permissions = {Manifest.permission.RECORD_AUDIO};
     //endregion
@@ -75,15 +76,15 @@ public class AddDreamActivity extends AppCompatActivity {
         super.onStart();
 
         //Datum wird ermittelt und string wird erstellt, um das Audio file unter einem individuellen namen zu speichern.
-        Date currenttime  = Calendar.getInstance().getTime();
-        sDate = new SimpleDateFormat("yyyy-MM-dd").format(currenttime);
+        Date currentTime  = Calendar.getInstance().getTime();
+        sDate = new SimpleDateFormat("yyyy-MM-dd").format(currentTime);
 
 
         // Record to the external cache directory for visibility
         // AudioFile wird angelegt
         //TODO: Die files werden in dem Cache angelegt und werden direkt danach gelöscht
         //TODO: Speicherort auswählen.
-        mFileName = getExternalCacheDir().getAbsolutePath();
+        mFileName = getExternalCacheDir().getAbsolutePath(); //TODO: getAbsolutePath may produce a NullPointerException
         Log.i("FILE_PATH", mFileName);
         mFileName += "/" +sDate +".3gp";
 
@@ -104,7 +105,7 @@ public class AddDreamActivity extends AppCompatActivity {
 
         //region Spinner Setup/setOnItemSelectedListener
         //spinner connect with view
-        typeSpinner = (Spinner) findViewById(R.id.dream_type_spinner);
+        typeSpinner =  findViewById(R.id.dream_type_spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.dream_type_spinner_array, android.R.layout.simple_spinner_item);
@@ -155,18 +156,18 @@ public class AddDreamActivity extends AppCompatActivity {
         // ***************
         // * SAVE BUTTON *
         // ***************
-        Button saveButton = (Button) findViewById(R.id.add_dream_button);
+        Button saveButton =  findViewById(R.id.add_dream_button);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
                 //Traum Titel
-
                 String titel = DreamTitle();
 
                 //TraumText
                 String text = DreamText();
+
                 //TraumTyp
                 /*TYPE 0 = normal dream
                   Type 1 = pre-lucid dream
@@ -188,7 +189,7 @@ public class AddDreamActivity extends AppCompatActivity {
 
 
                 //checkt ob Daten eingegeben wurden, wenn nicht wird ein Toast gepopt
-                if(checkFile == 0 && titel.matches("")) {
+                if(titel.matches("")) {
 
                     Toast toast = Toast.makeText(AddDreamActivity.this, R.string.toast_empty, Toast.LENGTH_LONG);
                     toast.show();
@@ -254,7 +255,7 @@ public class AddDreamActivity extends AppCompatActivity {
 
     private String DreamText() {
 
-        EditText editText = (EditText) findViewById(R.id.edit_text_field);
+        EditText editText =  findViewById(R.id.edit_text_field);
         String text = editText.getText().toString();
 
         Log.i("DreamText", text); // For debugging
@@ -263,7 +264,7 @@ public class AddDreamActivity extends AppCompatActivity {
 
     private String DreamTitle()
     {
-        EditText editText = (EditText) findViewById(R.id.edit_text_title);
+        EditText editText = findViewById(R.id.edit_text_title);
         String text = editText.getText().toString();
 
         Log.i("DreamTitle", text); // For debugging
@@ -463,7 +464,7 @@ public class AddDreamActivity extends AppCompatActivity {
 
 
         //Traum in die Datenbank einfügen
-        public void addDream(DatabaseObject databaseObject)
+        private void addDream(DatabaseObject databaseObject)
         {
 
 

@@ -12,22 +12,20 @@
         android:layout_height="wrap_content"
         android:text="@string/app_name"
         android:layout_gravity="center"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:layout_margin="8dp"/>
 
     <Button
         android:id="@+id/add_dream_button"
         android:text="ADD DREAM"
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="40dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
 
     <Button
-        android:id="@+id/my_diary_button"
+        android:id="@+id/my_diary_intent_button"
         android:text="MY DIARY"
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="40dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
 
@@ -35,7 +33,6 @@
         android:id="@+id/reminders_button"
         android:text="REMINDERS"
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="40dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
 
@@ -43,7 +40,6 @@
         android:id="@+id/settings_button"
         android:text="SETTINGS"
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="40dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
 

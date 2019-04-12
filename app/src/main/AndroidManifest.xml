@@ -7,7 +7,6 @@
 
     <application
 
-
         android:name=".reminderclasses.AppBlueprint"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,7 +18,6 @@
         <activity android:name=".uiclasses.MyDiaryActivity"></activity>
         <activity android:name=".uiclasses.ShowDreamEntry"></activity>
         <activity android:name=".uiclasses.RemindersActivity"></activity>
-        <activity android:name=".uiclasses.AddAlarmActivity"></activity>
 
         <activity android:name=".uiclasses.MainActivity">
             <intent-filter>

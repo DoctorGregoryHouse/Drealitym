@@ -17,7 +17,9 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -61,32 +63,10 @@ public class RemindersActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminders);
 
-
-        ArrayList<AlarmItem> alarmItems = new ArrayList<>();
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(getBaseContext(), AddAlarmActivity.class);
-                startActivity(intent);
-
-                //Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG).setAction("Action",null).show();
-            }
-        });
-
-
-
-
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view_reminders);
-
-
-
-
-
-
-
+        //hide the actionBar
+        if (getSupportActionBar() != null){
+            getSupportActionBar().hide();
+        }
 
     }
 
@@ -182,5 +162,62 @@ public class RemindersActivity extends AppCompatActivity{
 
     //TODO: implement functionality to specify the frequency of the notification to occur
 
+
+    public class ExpandableListAdapter extends android.widget.BaseExpandableListAdapter {
+
+        public ExpandableListAdapter() {
+            super();
+        }
+
+        @Override
+        public int getGroupCount() {
+            return 0;
+        }
+
+        @Override
+        public int getChildrenCount(int groupPosition) {
+            return 0;
+        }
+
+        @Override
+        public Object getGroup(int groupPosition) {
+            return null;
+        }
+
+        @Override
+        public Object getChild(int groupPosition, int childPosition) {
+            return null;
+        }
+
+        @Override
+        public long getGroupId(int groupPosition) {
+            return 0;
+        }
+
+        @Override
+        public long getChildId(int groupPosition, int childPosition) {
+            return 0;
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return false;
+        }
+
+        @Override
+        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+            return null;
+        }
+
+        @Override
+        public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+            return null;
+        }
+
+        @Override
+        public boolean isChildSelectable(int groupPosition, int childPosition) {
+            return false;
+        }
+    }
 
 }
