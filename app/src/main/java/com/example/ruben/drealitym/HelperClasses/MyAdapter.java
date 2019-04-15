@@ -55,7 +55,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         Log.d(TAG, "onCreateViewHolder: called.");
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false );
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_dream, parent, false );
         MyViewHolder viewHolder = new MyViewHolder(view);
         cursor.moveToFirst();
 

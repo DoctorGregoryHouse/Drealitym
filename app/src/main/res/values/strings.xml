@@ -13,4 +13,7 @@
         <item>pre-lucid dream</item>
         <item>lucid dream</item>
     </string-array>
+
+    <string name="reminders_btn_listEnd">ADD REMINDER</string>
+
 </resources>

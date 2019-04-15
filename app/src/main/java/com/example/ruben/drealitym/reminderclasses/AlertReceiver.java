@@ -52,7 +52,7 @@ public class AlertReceiver extends BroadcastReceiver {
     }
 
     //notification to remind the User to read the dream of the previous day
-    //TODO: this should only be executed if there is an dream previously
+    //TODO: this should only be executed if there is a dream previously
     public void sendReadNotification(){
 
         //builds the notification
