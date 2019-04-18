@@ -16,4 +16,12 @@
 
     <string name="reminders_btn_listEnd">ADD REMINDER</string>
 
+    <string name="reminders_fragment_day_monday">Monday</string>
+    <string name="reminders_fragment_day_tuesday">Tuesday</string>
+    <string name="reminders_fragment_day_wednesday">Wednesday</string>
+    <string name="reminders_fragment_day_thursday">Thursday</string>
+    <string name="reminders_fragment_day_friday">Friday</string>
+    <string name="reminders_fragment_day_saturday">Saturday</string>
+    <string name="reminders_fragment_day_sunday">Sunday</string>
+    <string name="reminders_fragment_name_text">Choose a Name</string>
 </resources>
