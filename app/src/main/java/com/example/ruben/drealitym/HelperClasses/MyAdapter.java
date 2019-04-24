@@ -21,8 +21,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
 
     private static final String TAG = "MyAdapter";
-    Cursor cursor;
-    Context context;
+    private Cursor cursor;
+    private Context context;
     private boolean valid;
 
     Intent intent;
@@ -103,14 +103,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
         Log.d(TAG, "getItemCount: called.");
         //gibt an wie viele rows der cursor hat, so viele Views soll es letztendlich geben
 
-        //minus eins weil die rows bei null anfangen
+
         return cursor.getCount() ;
     }
 
 
 
     //ViewHolder  for the certain item.
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+     static class MyViewHolder extends RecyclerView.ViewHolder {
 
          TextView title;
          TextView text;
@@ -120,7 +120,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
 
         //Viewholder hält die Einträge in dem Arbeitsspeicher dass der RecyclerView alles schnell wieder darstellen kann
-        public MyViewHolder(View itemView ) {
+         MyViewHolder(View itemView ) {
             super(itemView);
 
             Log.d(TAG, "MyViewHolder: called.");
