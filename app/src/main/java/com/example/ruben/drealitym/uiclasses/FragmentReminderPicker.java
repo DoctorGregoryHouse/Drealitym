@@ -1,5 +1,6 @@
 package com.example.ruben.drealitym.uiclasses;
 
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,25 +13,39 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.ruben.drealitym.R;
 
+import java.util.Calendar;
 
 
+public class FragmentReminderPicker extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
 
 
-public class FragmentReminderPicker extends DialogFragment {
 
 
     //interface to communicate with the underlying activity
     //SEE ON_ATTACH
     public interface FragmentReminderListener {
 
-        void onInputSent(String swag);
+        /**
+         *
+         * @param name
+         * @param startHour
+         * @param startMin
+         * @param stopHour
+         * @param stopMin
+         * @param days
+         * @param interval
+         */
+
+        void onInputSent(String name, int startHour, int startMin, int stopHour, int stopMin, int[] days, int interval);
     }
 
     private FragmentReminderListener listener;
@@ -40,15 +55,25 @@ public class FragmentReminderPicker extends DialogFragment {
     boolean editMode;
 
 
-    TextView startTime;
-    TextView stopTime;
+    EditText editTextName;
+    String name = "";
+
+    EditText editTextStart;
+    EditText editTextStop;
+    View clickedEditText;
+
+    int startHour = 0;
+    int startMin = 0;
+    int stopHour = 0;
+    int stopMin = 0;
+
 
     Button saveButton;
     Button discardButton;
 
     //values for the ReminderObject
-    String start;
-    String stop;
+
+
     int[] dayValues;
     int interval;
 
@@ -83,13 +108,11 @@ public class FragmentReminderPicker extends DialogFragment {
 
     }
 
+
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
-
-
 
         if (savedInstanceState != null) {
             editMode = true;
@@ -106,8 +129,18 @@ public class FragmentReminderPicker extends DialogFragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /**
+                 * @param name
+                 * @param startHour
+                 * @param startMin
+                 * @param stopHour
+                 * @param stopMin
+                 * @param days
+                 * @param interval
+                 */
 
-                listener.onInputSent("wasf");
+
+                listener.onInputSent(name, startHour, startMin, stopHour, stopMin, dayValues, interval );
 
             }
         });
@@ -121,8 +154,6 @@ public class FragmentReminderPicker extends DialogFragment {
 
             }
         });
-
-
 
         /**
          * TOGGLE_BUTTON LISTENER
@@ -246,17 +277,63 @@ public class FragmentReminderPicker extends DialogFragment {
             }
         });
 
+        editTextStart = view.findViewById(R.id.reminder_fragment_start_time_edit_text);
+        editTextStop = view.findViewById(R.id.reminder_fragment_stop_time_edit_text);
+
+        editTextStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new TimePickerDialog(getActivity(), FragmentReminderPicker.this, 0, 0, false).show();
+                clickedEditText = v;
+
+
+
+            }
+        });
+
+        editTextStop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //opens the TimePickerDialog. the the "textIsSelectable" line in the XML file lets vanish the keyboard
+                new TimePickerDialog(getActivity(), FragmentReminderPicker.this,0, 0, false).show();
+                clickedEditText = v;
+                //TODO: when the activity is reopened, the startTime must stay on the time set before
+
+
+
+
+            }
+        });
+
+        editTextName = view.findViewById(R.id.reminder_fragment_edit_text_name);
+       name =  editTextName.getText().toString();
+
+    }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+
+            if (clickedEditText.getId() == editTextStart.getId()){
+
+                startHour = hourOfDay;
+                startMin = minute;
+
+                editTextStart.setText(hourOfDay + ":" + minute);}
+            else {
+                editTextStop.setText(hourOfDay + ":" + minute);
+
+                stopHour = hourOfDay;
+                stopMin = minute;
+            }
+            clickedEditText = null;
 
 
 
 
     }
 
-    private void processInput(){
-
-
-
-    }
 
 
 }

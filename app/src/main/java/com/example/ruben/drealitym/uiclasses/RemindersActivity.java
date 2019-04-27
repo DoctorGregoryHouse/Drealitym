@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 
 
 import com.example.ruben.drealitym.R;
@@ -16,7 +17,14 @@ import com.example.ruben.drealitym.R;
 
 public class RemindersActivity extends AppCompatActivity implements FragmentReminderPicker.FragmentReminderListener {
 
-
+    //parameters passed by the interface of the ReminderPickerFragment
+    int mStartHour;
+    int mStartMin;
+    int mStopHour;
+    int mStopMin;
+    int mInterval;
+    int[] mDayValues;
+    String mName;
 
 
     @Override
@@ -47,54 +55,18 @@ public class RemindersActivity extends AppCompatActivity implements FragmentRemi
     }
 
     @Override
-    public void onInputSent(String swag) {
+    public void onInputSent(String name, int startHour, int startMin, int stopHour, int stopMin, int[] days, int interval) {
 
-    }
-
-    //    /**
-//     * THIS IS A TEST METHOD WHICH CREATES A DUMMY DREAM_REMINDER OBJECT
-//     */
-//    public DreamReminder DummyDreamReminder() {
-//
-//        //nur montag aktiv
-//        int[] dummydays = new int[7];
-//        dummydays[0] = 1;
-//
-//
-//
-//
-//
-//        DreamReminder dummyReminder = new DreamReminder(dummydays, )
-//    }
-
-
-
-
-
-
-    /**
-     * DREAM_REMINDER OBJECT
-     */
-    public class DreamReminder {
-
-        private int[] mDays;
-        private int mStartTime;
-        private int mStopTime;
-        private String mName;
-        private int mInterval;
-        private int mId;
-
-        public DreamReminder(int[] days, int startTime, int stopTime, String name, int interval, int id) {
-
-            mDays = days;
-            mStartTime = startTime;
-            mStopTime = stopTime;
-            mName = name;
-            mInterval = interval;
-            mId = id;
-        }
-
-
+        /**
+         *
+         * @param name
+         * @param startHour
+         * @param startMin
+         * @param stopHour
+         * @param stopMin
+         * @param days
+         * @param interval
+         */
 
 
     }
