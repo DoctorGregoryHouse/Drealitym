@@ -19,6 +19,7 @@
         <activity android:name=".uiclasses.ShowDreamEntry"></activity>
         <activity android:name=".uiclasses.RemindersActivity"></activity>
 
+
         <activity android:name=".uiclasses.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -23,24 +23,28 @@
                 android:id="@+id/reminder_name_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
+                android:textColor="#fff"
                 tools:text="ReminderName" />
 
             <TextView
                 android:id="@+id/reminder_days_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
+                android:textColor="#fff"
                 tools:text="MO DI MI DO FR SA" />
 
             <TextView
                 android:id="@+id/reminder_time_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
+                android:textColor="#fff"
                 tools:text="von 12 bis 18 Uhr" />
 
             <TextView
                 android:id="@+id/reminder_interval_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#fff"
                 tools:text="Alle 2 stunden" />
 
 

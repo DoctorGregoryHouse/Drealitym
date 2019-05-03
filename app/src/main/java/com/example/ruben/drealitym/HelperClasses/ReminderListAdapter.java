@@ -20,11 +20,13 @@ import java.util.ArrayList;
 public class ReminderListAdapter extends RecyclerView.Adapter {
 
     private static final String TAG = "ReminderListAdapter";
-    ArrayList mDreamReminderList;
-    Context context;
+    private ArrayList mDreamReminderList;
+    private Context context;
 
-    public ReminderListAdapter(Context context, ArrayList<RemindersActivity.DreamReminder> DreamReminderList ) {
+    public ReminderListAdapter(Context context, ArrayList<String> DreamReminderList ) {
 
+
+        //TODO: change the type of the input array to a dreamReminderObject or something
         Log.d(TAG, " Constructor called");
         mDreamReminderList = DreamReminderList;
         this.context = context;
@@ -37,10 +39,8 @@ public class ReminderListAdapter extends RecyclerView.Adapter {
 
         Log.d(TAG, "onCreateViewHolder: called.");
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_item_reminder, viewGroup, false);
-        MyViewHolder viewHolder = new MyViewHolder(view);
 
-
-        return viewHolder;
+        return new MyViewHolder(view);
     }
 
     @Override

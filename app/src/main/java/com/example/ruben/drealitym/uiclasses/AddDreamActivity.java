@@ -41,9 +41,9 @@ public class AddDreamActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "AddDreamActivity";
 
-
+    
     //Helper for Database
-    DreamDbHelper mDbHelper = new DreamDbHelper(this);
+   DreamDbHelper mDbHelper = new DreamDbHelper(this);
 
     //
     Spinner typeSpinner;
@@ -383,7 +383,7 @@ public class AddDreamActivity extends AppCompatActivity {
 
 
     //Daten für den Datenbankeintrag die in  den AsyncTask und anschließen in die Datenbank geparst werden
-    public class DatabaseObject {
+    private class DatabaseObject {
 
         String title;
         String text;
@@ -392,7 +392,7 @@ public class AddDreamActivity extends AppCompatActivity {
         String date;
         int favourite;
 
-        public DatabaseObject(String titel, String text, int dreamType, int checkFile, String date, int favourite) {
+        private DatabaseObject(String titel, String text, int dreamType, int checkFile, String date, int favourite) {
 
             this.title = titel;
             this.text = text;           // the content of the Edittext field
@@ -405,22 +405,22 @@ public class AddDreamActivity extends AppCompatActivity {
         }
 
         //getters for the AddDream information
-        public int getFavourite() {
+        private int getFavourite() {
             return favourite;
         }
-        public String getTitle() {
+        private String getTitle() {
             return title;
         }
-        public String getDate() {
+        private String getDate() {
             return date;
         }
-        public int getCheckFile() {
+        private int getCheckFile() {
             return checkFile;
         }
-        public int getDreamType() {
+        private int getDreamType() {
             return dreamType;
         }
-        public String getText() {
+        private String getText() {
             return text;
         }
 
@@ -429,10 +429,11 @@ public class AddDreamActivity extends AppCompatActivity {
     }
 
     //Im Hintergrund wird das DatabaseObject in die Datenbank eingefügt.
-    public  class DatabaseOperations extends AsyncTask<DatabaseObject,Void,String> {
+    private class DatabaseOperations extends AsyncTask<DatabaseObject,Void,String> {
 
 
-        final String LOG_TAG = "DatabaseOperations";
+
+        final String LOG_TAG = "AddDreamDbOperations";
 
         @Override
         protected void onPreExecute() {

@@ -49,6 +49,8 @@ public class AlertReceiver extends BroadcastReceiver {
         //if the id is the same in another notification, the old notification gets overridden, otherwise it will create another notification
         notifyManager.notify(1,notification);
 
+        //TODO: schedule next notification
+
     }
 
     //notification to remind the User to read the dream of the previous day

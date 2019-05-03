@@ -142,6 +142,8 @@ public class FragmentReminderPicker extends DialogFragment implements TimePicker
 
                 listener.onInputSent(name, startHour, startMin, stopHour, stopMin, dayValues, interval );
 
+                getFragmentManager().popBackStack();
+
             }
         });
 
@@ -333,8 +335,6 @@ public class FragmentReminderPicker extends DialogFragment implements TimePicker
 
 
     }
-
-
 
 }
 

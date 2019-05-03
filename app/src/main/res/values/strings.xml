@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Drealitym</string>
     <string name="add_dream_title">ADD DREAM</string>
-    <string name="add_dream_edit_text_head">Write down your dream...</string>
+    <string name="add_dream_edit_text_head">Write down your dream &#8230;</string>
     <string name="add_dream_edit_text_title">Dream title</string>
     <string name="toast_empty">Please enter a title</string>
     <string name="toast_not_empty">Entry saved</string>
@@ -14,8 +14,8 @@
         <item>lucid dream</item>
     </string-array>
 
-    <string name="reminders_btn_listEnd">ADD REMINDER</string>
 
+    <!--REMINDERS_FRAGMENT-->
     <string name="reminders_fragment_day_monday">Monday</string>
     <string name="reminders_fragment_day_tuesday">Tuesday</string>
     <string name="reminders_fragment_day_wednesday">Wednesday</string>
@@ -38,4 +38,9 @@
         <item>7 hour</item>
         <item>8 hour</item>
     </string-array>
+
+
+    <!--APP_BLUEPRINT_ACTIVITY-->
+    <string name="blueprint_activity_channel2_description">This channel reminds you to read your dreams</string>
+
 </resources>
