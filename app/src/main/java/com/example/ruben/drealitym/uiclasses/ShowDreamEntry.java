@@ -4,16 +4,14 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.widget.TextView;
 
 import com.example.ruben.drealitym.HelperClasses.DreamContract;
 import com.example.ruben.drealitym.HelperClasses.DreamDbHelper;
 import com.example.ruben.drealitym.R;
-
-import org.w3c.dom.Text;
 
 public class ShowDreamEntry extends AppCompatActivity {
 

@@ -3,12 +3,11 @@ package com.example.ruben.drealitym.uiclasses;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
-import android.widget.ListView;
 
 import com.example.ruben.drealitym.HelperClasses.DreamContract;
 import com.example.ruben.drealitym.HelperClasses.DreamDbHelper;
@@ -37,7 +36,7 @@ public class MyDiaryActivity extends AppCompatActivity {
 
 
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        RecyclerView recyclerView =  findViewById(R.id.recycler_view);
 
 
         //SQL Helper-class

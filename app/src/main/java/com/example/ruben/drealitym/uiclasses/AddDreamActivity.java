@@ -1,21 +1,19 @@
 package com.example.ruben.drealitym.uiclasses;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatButton;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
