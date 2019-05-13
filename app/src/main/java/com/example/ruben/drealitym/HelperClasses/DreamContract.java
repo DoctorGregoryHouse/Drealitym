@@ -25,7 +25,7 @@ public class  DreamContract {
     public static final class ReminderEntry implements  BaseColumns {
 
         public final static String TABLE_NAME = "Reminders";
-        public final static String _ID = BaseColumns._ID;
+         public final static String _ID = BaseColumns._ID;
         public final static String COLUMN_REMINDER_NAME = "name";
         public final static String COLUMN_REMINDER_DAYS = "days";
         public final static String COLUMN_REMINDER_INTERVAL = "interval";
