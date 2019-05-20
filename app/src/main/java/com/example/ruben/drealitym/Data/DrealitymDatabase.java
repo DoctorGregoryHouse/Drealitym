@@ -9,7 +9,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {DreamEntry.class, ReminderEntry.class}, version = 1)
+@Database(entities = {DreamEntry.class, ReminderEntry.class, }, version = 1, exportSchema = false)
 public abstract class DrealitymDatabase extends RoomDatabase {
 
     //DrealitymDatabase;
@@ -40,6 +40,12 @@ public abstract class DrealitymDatabase extends RoomDatabase {
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
         }
+
+        @Override
+        public void onOpen(@NonNull SupportSQLiteDatabase db) {
+            super.onOpen(db);
+            new PopulateDbAsyncTask(instance).execute();
+        }
     };
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void>{
         private DreamDao mDreamDao;
@@ -49,7 +55,7 @@ public abstract class DrealitymDatabase extends RoomDatabase {
         }
         @Override
         protected Void doInBackground(Void... voids) {
-            //mDreamDao.insert(new DreamEntry(1,1,"100","DummyDreamTitle","DummyDreamText", 1, "//dummy/path/audio"));
+            mDreamDao.insert(new DreamEntry(1,1,"100","DummyDreamTitle","DummyDreamText", 1, "//dummy/path/audio"));
             return null;
         }
     }

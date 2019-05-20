@@ -13,6 +13,8 @@ public class DrealitymRepository {
     private ReminderDao reminderDao;
 
     private LiveData<List<DreamEntry>> allDreams;
+
+
     private LiveData<List<ReminderEntry>> allReminders;
     //
     public DrealitymRepository(Application application){ //application is a subclass of context
@@ -20,10 +22,10 @@ public class DrealitymRepository {
 
         //The statements below call the abstract method of the Database class, usual its not possible to call abstract classes, but room creates the necessary code to call the class
         dreamDao = database.dreamDao();
-        reminderDao = database.reminderDao();
+        //reminderDao = database.reminderDao();
 
-        dreamDao.getAllDreams();
-        reminderDao.getAllReminders();
+        allDreams =  dreamDao.getAllDreams();
+        //reminderDao.getAllReminders();
 
 
     }

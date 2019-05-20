@@ -46,7 +46,7 @@
                 android:textAlignment="center"
                 android:textOff="@string/reminders_fragment_day_monday"
                 android:textOn="@string/reminders_fragment_day_monday"
-                android:background="@drawable/reminders_fragment_day_button" />
+                 />
 
             <ToggleButton
                 android:id="@+id/reminder_fragment_toggle_button_tuesday"
@@ -56,8 +56,7 @@
                 android:textSize="18sp"
                 android:textAlignment="center"
                 android:textOff="@string/reminders_fragment_day_tuesday"
-                android:textOn="@string/reminders_fragment_day_tuesday"
-                android:background="@drawable/reminders_fragment_day_button" />
+                android:textOn="@string/reminders_fragment_day_tuesday" />
 
             <ToggleButton
 
@@ -69,8 +68,7 @@
                 android:textSize="18sp"
                 android:textAlignment="center"
                 android:textOff="@string/reminders_fragment_day_wednesday"
-                android:textOn="@string/reminders_fragment_day_wednesday"
-                android:background="@drawable/reminders_fragment_day_button" />
+                android:textOn="@string/reminders_fragment_day_wednesday" />
 
             <ToggleButton
                 android:id="@+id/reminder_fragment_toggle_button_thursday"
@@ -80,8 +78,7 @@
                 android:textSize="18sp"
                 android:textAlignment="center"
                 android:textOff="@string/reminders_fragment_day_thursday"
-                android:textOn="@string/reminders_fragment_day_thursday"
-                android:background="@drawable/reminders_fragment_day_button" />
+                android:textOn="@string/reminders_fragment_day_thursday"/>
 
 
         </LinearLayout>
@@ -101,8 +98,7 @@
                 android:textSize="18sp"
                 android:textAlignment="center"
                 android:textOff="@string/reminders_fragment_day_friday"
-                android:textOn="@string/reminders_fragment_day_friday"
-                android:background="@drawable/reminders_fragment_day_button" />
+                android:textOn="@string/reminders_fragment_day_friday" />
 
             <ToggleButton
                 android:id="@+id/reminder_fragment_toggle_button_saturday"
@@ -112,8 +108,7 @@
                 android:textSize="18sp"
                 android:textAlignment="center"
                 android:textOff="@string/reminders_fragment_day_saturday"
-                android:textOn="@string/reminders_fragment_day_saturday"
-                android:background="@drawable/reminders_fragment_day_button" />
+                android:textOn="@string/reminders_fragment_day_saturday" />
 
             <ToggleButton
                 android:id="@+id/reminder_fragment_toggle_button_sunday"
@@ -123,8 +118,7 @@
                 android:textSize="18sp"
                 android:textAlignment="center"
                 android:textOff="@string/reminders_fragment_day_sunday"
-                android:textOn="@string/reminders_fragment_day_sunday"
-                android:background="@drawable/reminders_fragment_day_button" />
+                android:textOn="@string/reminders_fragment_day_sunday" />
 
 
         </LinearLayout>

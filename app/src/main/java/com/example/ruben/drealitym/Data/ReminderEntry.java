@@ -8,6 +8,7 @@ public class ReminderEntry {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
+
     private String name;
     private String days;
     private int interval;
@@ -29,6 +30,10 @@ public class ReminderEntry {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {

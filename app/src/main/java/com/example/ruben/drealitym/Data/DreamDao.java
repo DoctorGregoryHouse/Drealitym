@@ -26,6 +26,6 @@ public interface DreamDao {
     void deleteAllDreams();
 
     //from here the whole data is accessed, specifies the criterion by which the list is ordered (@param date)
-    @Query("SELECT * FROM dream_table ORDER BY date DESC")
+    @Query("SELECT * FROM dream_table")
     LiveData<List<DreamEntry>> getAllDreams(); // LiveData observes this object, as soon as there is any change in the note Table, this value will be updated and our Activity gets notified
 }
