@@ -1,48 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".uiclasses.MainActivity"
-    android:orientation="vertical">
+    android:background="@drawable/background_shape_lila"
+    tools:context=".uiclasses.MainActivity">
 
     <TextView
+        android:id="@+id/activity_main_heading_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_horizontal"
+        android:textColor="#fff"
+        android:textSize="32sp"
+        tools:text="DREALITYM" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/activity_main_card_profile"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_below="@+id/activity_main_heading_text_view"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:cardBackgroundColor="#BF000000"
+        app:cardCornerRadius="12dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="PROFILE"
+            android:textColor="#fff"
+            android:gravity="center"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/activity_main_card_settings"
+        android:layout_width="172dp"
+        android:layout_height="46dp"
+        android:layout_alignTop="@+id/activity_main_card_profile"
+        android:layout_marginStart="8dp"
+        android:layout_toEndOf="@+id/activity_main_card_profile"
+        app:cardBackgroundColor="#BF000000"
+        app:cardCornerRadius="12dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Settings"
+            android:textColor="#fff"
+            android:gravity="center"/>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/activity_main_card_learn"
+        android:layout_width="172dp"
+        android:layout_height="46dp"
+        android:layout_below="@+id/activity_main_card_settings"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@+id/activity_main_card_profile"
+        app:cardBackgroundColor="#BF000000"
+        app:cardCornerRadius="12dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Learning"
+            android:textColor="#fff" />
+
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/activity_main_card_reminders"
+        android:layout_width="172dp"
+        android:layout_height="92dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_below="@+id/activity_main_card_learn"
+        android:layout_toEndOf="@+id/activity_main_card_profile"
+        app:cardBackgroundColor="#BF000000"
+        app:cardCornerRadius="12dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Reminders"
+            android:textColor="#fff"
+            android:gravity="center"/>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/activity_main_card_diary"
+        android:layout_width="380dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="8dp"
+        android:layout_below="@+id/activity_main_card_profile"
+        android:layout_alignStart="@+id/activity_main_card_profile"
+        app:cardBackgroundColor="#BF000000"
+        app:cardCornerRadius="12dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="MY DIARY"
+            android:textColor="#fff"
+            android:gravity="center"/>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <FrameLayout
+        android:id="@+id/activity_main_frame_layout_card_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:layout_gravity="center"
-        android:textSize="20sp"
-        android:layout_margin="8dp"/>
+        android:layout_below="@+id/activity_main_card_diary">
 
-    <Button
-        android:id="@+id/add_dream_button"
-        android:text="ADD DREAM"
-        android:layout_width="match_parent"
+
+        <include layout="@layout/dream_entry_card_view_item">
+
+        </include>
+
+    </FrameLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/activity_main_fab"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:layout_marginTop="8dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/activity_main_frame_layout_card_view" />
 
-    <Button
-        android:id="@+id/my_diary_intent_button"
-        android:text="MY DIARY"
+    <FrameLayout
+        android:id="@+id/frame_layout_dialog_fragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
-
-    <Button
-        android:id="@+id/reminders_button"
-        android:text="REMINDERS"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
-
-    <Button
-        android:id="@+id/settings_button"
-        android:text="SETTINGS"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:layout_height="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp">
 
 
+    </FrameLayout>
 
-</LinearLayout>
+</RelativeLayout>
