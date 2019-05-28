@@ -18,24 +18,19 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends  FragmentActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment fragment = new StartScreenFragment();
+        fragmentTransaction.add(R.id.main_activity_container, fragment).commit();
 
 
-        FloatingActionButton fab = findViewById(R.id.activity_main_fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                Fragment fragment = new DreamDialogFragment();
-                fragmentTransaction.add(R.id.frame_layout_dialog_fragment,fragment).commit();
-            }
-        });
+
+
 
 
 
