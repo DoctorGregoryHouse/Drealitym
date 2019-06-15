@@ -43,4 +43,11 @@
     <!--APP_BLUEPRINT_ACTIVITY-->
     <string name="blueprint_activity_channel2_description">This channel reminds you to read your dreams</string>
 
+
+    <!--FRAGMENT DREAM DIALOG-->
+    <string name="fragment_dream_dialog_dream_title">DREAM TITLE</string>
+    <string name="fragment_dream_dialog_dream_text">DREAM TEXT</string>
+    <string name="fragment_dream_dialog_add_audio">ADD AUDIO FILE</string>
+    <string name="fragment_dream_dialog_text_hint">Here you can start typing your dream...</string>
+
 </resources>

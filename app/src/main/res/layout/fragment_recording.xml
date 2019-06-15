@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="98dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@null">
+
+        <TextView
+            android:id="@+id/fragment_dream_dialog_tv_audio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/fragment_dream_dialog_add_audio"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            tools:text="ADD AUDIO FILE" />
+
+
+
+        <ImageButton
+            android:id="@+id/fragment_playing_imgBtn_record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="28dp"
+            android:background="@null"
+            android:src="@drawable/ic_mic_48dp" />
+
+
+
+        <TextView
+            android:id="@+id/fragment_playing_tv_recording_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignEnd="@id/fragment_playing_imgBtn_record"
+            android:layout_marginEnd="76dp"
+            android:textColor="#fff"
+            android:textSize="20dp"
+            android:text="0:22/1:29"
+            tools:text="0:22/1:29" />
+
+
+
+
+
+
+</RelativeLayout>
