@@ -28,38 +28,5 @@ public class MainActivity extends  FragmentActivity {
         Fragment fragment = new StartScreenFragment();
         fragmentTransaction.add(R.id.main_activity_container, fragment).commit();
 
-
-
-
-
-
-
-//        final Button addDreamBtn =   findViewById(R.id.add_dream_button);
-//        final Button myDiaryBtn =  findViewById(R.id.my_diary_intent_button);
-//        final Button remindersBtn = findViewById(R.id.reminders_button);
-//        final Button settingsBtn = findViewById(R.id.settings_button);
-//
-//
-//        myDiaryBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent myDiaryIntent = new Intent(MainActivity.this, DreamDiaryActivity.class);
-//                startActivity(myDiaryIntent);
-//            }
-//        });
-//
-//
-//
-//        settingsBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
-//                startActivity(settingsIntent);
-//            }
-//        });
-
     }
-
-
-
 }

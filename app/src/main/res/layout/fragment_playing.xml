@@ -23,8 +23,7 @@
         android:id="@+id/fragment_dream_dialog_layout_audio"
         android:layout_width="match_parent"
         android:layout_height="72dp"
-        android:layout_below="@+id/fragment_dream_dialog_tv_audio"
-        android:layout_toStartOf="@+id/fragment_dream_dialog_imgBtn_record">
+        android:layout_below="@+id/fragment_dream_dialog_tv_audio">
 
 
         <ImageButton
