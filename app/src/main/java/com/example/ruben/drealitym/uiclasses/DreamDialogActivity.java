@@ -29,12 +29,12 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
         }
 
 
+
+
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         Fragment fragment = new RecordingFragment();
         transaction.add(R.id.fragment_dream_dialog_audio_container, fragment).commit();
-
-
 
     }
 
@@ -46,6 +46,8 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         Fragment fragment = new PlayingFragment(); 
         transaction.replace(R.id.fragment_dream_dialog_audio_container, fragment).commit();
-
     }
+
+
+
 }

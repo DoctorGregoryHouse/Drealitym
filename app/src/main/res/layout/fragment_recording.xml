@@ -39,7 +39,6 @@
             android:layout_marginEnd="76dp"
             android:textColor="#fff"
             android:textSize="20dp"
-            android:text="0:22/1:29"
             tools:text="0:22/1:29" />
 
 
