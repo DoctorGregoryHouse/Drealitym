@@ -1,5 +1,6 @@
 package com.example.ruben.drealitym.uiclasses;
 
+import android.content.Context;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,7 +23,16 @@ import androidx.fragment.app.Fragment;
 
 public class RecordingFragment extends Fragment {
 
+    public interface recordingInterface {
+
+        public void onFinishRecording(String filePath, int timerMins, int timerSecs);
+
+    }
     private final String LOG_TAG = "RecordingFragment";
+
+    private recordingInterface recordingInterface;
+    private int timerSecs;
+    private int timerMins;
 
     private TextView tvRecordingTime;
     private ImageButton iBtnRecord;
@@ -37,6 +47,18 @@ public class RecordingFragment extends Fragment {
     private long timeInMilliseconds = 0L;
     private long timeSwapBuff = 0L;
     private long updatedTime = 0L;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        //if statement checks whether the underlying activity has implemented the FragmentReminderListener interface
+        if (context instanceof recordingInterface){
+
+            recordingInterface = (recordingInterface) context;
+        }else {
+            throw new RuntimeException(context.toString() + " must implement recordingInterface");
+        }
+    }
 
     @Nullable
     @Override
@@ -119,6 +141,9 @@ public class RecordingFragment extends Fragment {
 
         //TODO: change color of the button if he is not usable due not accepting the audio permissions
 
+        //calling the interface to pass the relevant information to the underlying activity
+        recordingInterface.onFinishRecording(mFileName, timerMins, timerSecs);
+
     }
 
 
@@ -128,14 +153,17 @@ public class RecordingFragment extends Fragment {
         public void run() {
 
             timeInMilliseconds = SystemClock.uptimeMillis()-startHTime;
-            updatedTime = timeSwapBuff + timeInMilliseconds;
-
+            //updatedTime = timeSwapBuff + timeInMilliseconds;
+            updatedTime = timeInMilliseconds;
             int secs = (int) (updatedTime/1000);
             int mins = secs /60;
             secs = secs % 60;
             tvRecordingTime.setText("" + String.format("%02d", mins) + ":"
                     + String.format("%02d", secs));
             timerThreadHandler.postDelayed(this, 0);
+
+            timerSecs = secs;
+            timerMins = mins;
         }
     };
 

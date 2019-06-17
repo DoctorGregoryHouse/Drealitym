@@ -84,7 +84,7 @@ public class FragmentReminderPicker extends DialogFragment implements TimePicker
 
             listener = (FragmentReminderListener) context;
         }else {
-            throw new RuntimeException(context.toString() + " must implement FragmenReminderListener");
+            throw new RuntimeException(context.toString() + " must implement FragmentReminderListener");
         }
     }
 

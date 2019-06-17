@@ -1,5 +1,6 @@
 package com.example.ruben.drealitym.uiclasses;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,8 +28,6 @@ public class StartScreenFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
     }
 
     @Nullable
@@ -47,10 +46,8 @@ public class StartScreenFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                Fragment fragment = new DreamDialogFragment();
-                fragmentTransaction.replace(R.id.main_activity_container,fragment).commit();
+                Intent intent = new Intent(getContext(), DreamDialogActivity.class);
+                startActivity(intent);
             }
         });
     }

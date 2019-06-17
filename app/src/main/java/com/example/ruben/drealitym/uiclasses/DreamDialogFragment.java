@@ -91,7 +91,9 @@ public class DreamDialogFragment extends Fragment {
         transaction.add(R.id.fragment_dream_dialog_audio_container,fragment).commit();
 
         ActivityCompat.requestPermissions(getActivity(), permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+
     }
+
 
 
 
@@ -133,9 +135,6 @@ public class DreamDialogFragment extends Fragment {
 
 
     }
-
-
-
 
 
 }

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_shape_lila"
+    android:orientation="horizontal"
     tools:context=".uiclasses.MainActivity">
 
     <TextView
@@ -15,6 +16,7 @@
         android:gravity="center_horizontal"
         android:textColor="#fff"
         android:textSize="32sp"
+        android:text="DREALITYM"
         tools:text="DREALITYM" />
 
     <androidx.cardview.widget.CardView
@@ -23,7 +25,7 @@
         android:layout_height="200dp"
         android:layout_below="@+id/activity_main_heading_text_view"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         style="@style/DreamCardStyle">
 
         <TextView
@@ -99,6 +101,9 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/activity_main_card_diary"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         android:layout_width="380dp"
         android:layout_height="64dp"
         android:layout_marginTop="8dp"
