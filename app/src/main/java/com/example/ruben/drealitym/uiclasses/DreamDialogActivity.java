@@ -28,14 +28,12 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
             getSupportActionBar().hide();
         }
 
-
-
-
-        fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        Fragment fragment = new RecordingFragment();
-        transaction.add(R.id.fragment_dream_dialog_audio_container, fragment).commit();
-
+        if(savedInstanceState==null) {
+            fragmentManager = getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            Fragment fragment = new RecordingFragment();
+            transaction.add(R.id.fragment_dream_dialog_audio_container, fragment).commit();
+        }
     }
 
     @Override
