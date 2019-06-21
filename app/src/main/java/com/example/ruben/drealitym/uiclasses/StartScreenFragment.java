@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.ruben.drealitym.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -19,6 +20,8 @@ import androidx.fragment.app.FragmentTransaction;
 public class StartScreenFragment extends Fragment {
 
     private String LOG_TAG = "StartScreenFragment";
+
+    private Button btnDreamDiary;
 
     public StartScreenFragment() {
         //Fragment needs at least one constructor
@@ -36,6 +39,9 @@ public class StartScreenFragment extends Fragment {
 
         Log.d(LOG_TAG, "OnCreateView: called...");
         return inflater.inflate(R.layout.fragment_start_screen, container, false);
+
+
+
     }
 
     @Override
@@ -50,5 +56,16 @@ public class StartScreenFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        btnDreamDiary = view.findViewById(R.id.fragment_start_screen_btn_myDiary);
+        btnDreamDiary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), DreamDiaryActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 }

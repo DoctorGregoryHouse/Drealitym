@@ -136,7 +136,7 @@ public class PlayingFragment extends Fragment {
         mSeekBarUpdateHandler.postDelayed(mUpdateSeekBar,0);
     }
 
-    //TODO: wenn das fragment zerstört wird soll der mediaplayer auch zerstört werden 
+    //TODO: wenn das fragment zerstört wird soll der mediaplayer auch zerstört werden
     private void stopPlaying() {
         mPlayer.release();
         mPlayer = null;

@@ -112,12 +112,13 @@
         android:layout_alignStart="@+id/activity_main_card_profile"
         style="@style/DreamCardStyle">
 
-        <TextView
+        <Button
+            android:id="@+id/fragment_start_screen_btn_myDiary"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="MY DIARY"
             android:textColor="#fff"
-            android:gravity="center"/>
+            android:background="@null" />
 
 
     </androidx.cardview.widget.CardView>
