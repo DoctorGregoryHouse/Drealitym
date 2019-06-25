@@ -20,7 +20,6 @@ public class NumberPickerDialog extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
         final NumberPicker numberPicker = new NumberPicker(getActivity());
-
         numberPicker.setMinValue(0);
         numberPicker.setMaxValue(2);
         numberPicker.setDisplayedValues(getResources().getStringArray(R.array.dialog_number_picker_strings));
@@ -28,7 +27,6 @@ public class NumberPickerDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(getString(R.string.dialog_number_picker_title));
         builder.setMessage(getString(R.string.dialog_number_picker_message));
-
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -43,7 +41,6 @@ public class NumberPickerDialog extends DialogFragment {
                 valueChangeListener.onValueChange(numberPicker, numberPicker.getValue(), numberPicker.getValue());
             }
         });
-
         builder.setView(numberPicker);
         return builder.create();
     }

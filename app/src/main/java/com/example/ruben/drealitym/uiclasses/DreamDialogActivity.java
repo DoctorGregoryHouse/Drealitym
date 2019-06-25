@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.ruben.drealitym.R;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -25,13 +26,14 @@ import java.util.Date;
 public class DreamDialogActivity extends AppCompatActivity implements RecordingFragment.recordingInterface, NumberPicker.OnValueChangeListener {
 
     //TODO: add permission request
-    private String LOG_TAG ="DreamDialogActivity";
+    private String LOG_TAG = "DreamDialogActivity";
+
 
     private FragmentManager fragmentManager;
     private Button btnSave;
     private Button btnOpenDialog;
 
-
+    private String mFileName;
     /*
     DreamClarity defines if its lucid pre-lucid or normal dream
     DreamDate adds the date of the dream saved
@@ -40,7 +42,7 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
      */
     private String dDreamTitle;
     private String dDreamText;
-    private int dDreamClarity;
+    private int dDreamClarity = 0; //default value
     private int dDreamDate;
     private boolean dDreamHasAudioFile;
     private String dDreamFilePath;
@@ -51,22 +53,37 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
     private String mDate;
 
 
+    //when NumberPickerDialog is called and the value changes, this method triggers
     @Override
     public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+        /*
+        0 = normal dream
+        1 = pre-lucid dream
+        2 = lucid dream
+        TODO: there should be a feedback to the user so he knows he chose a value, maybe when clicking the OK button in the NumberPickerDialog.class
+         */
 
+        dDreamClarity = newVal;
+        Toast.makeText(this, "New Value: " + dDreamClarity, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(LOG_TAG,"OnCreate: called...");
+        Log.d(LOG_TAG, "OnCreate: called...");
+
+        try {
+            mFileName = this.getExternalCacheDir().getAbsolutePath() + "/recording.3gp";
+        } catch (NullPointerException ex) {
+            Log.d(LOG_TAG, "Could not get path mFileName");
+        }
         setContentView(R.layout.fragment_dream_dialog);
         // Hide ActionBar
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
         //if screen turns the fragment should not be created again
-        if(savedInstanceState==null) {
+        if (savedInstanceState == null) {
             fragmentManager = getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             Fragment fragment = new RecordingFragment();
@@ -88,7 +105,6 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
         });
 
 
-
         mEdtText = findViewById(R.id.fragment_dream_dialog_edt_title);
         mEdtTitle = findViewById(R.id.fragment_dream_dialog_edt_text);
 
@@ -105,25 +121,36 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
 
     @Override
     public void onFinishRecording(String filePath, int timerMins, int timerSecs) {
-        Log.d(LOG_TAG,"onFinishRecording: called...");
+        Log.d(LOG_TAG, "onFinishRecording: called...");
 
-        Toast.makeText(this, "Mins: "+ timerMins + "secs "+ timerSecs, Toast.LENGTH_SHORT).show();
+        //TODO: maybe here can be determined whether there is an audio file or not
+        Toast.makeText(this, "Mins: " + timerMins + "secs " + timerSecs, Toast.LENGTH_SHORT).show();
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        Fragment fragment = new PlayingFragment(); 
+        Fragment fragment = new PlayingFragment();
         transaction.replace(R.id.fragment_dream_dialog_audio_container, fragment).commit();
     }
 
-    private void saveDream(){
+    private void saveDream() {
+        if(mFileName != null){
+            Date timeStamp = Calendar.getInstance().getTime();
+            String mTimeStamp = new SimpleDateFormat("yyyy-MM-dd-HH-mm").format(timeStamp);
+            //TODO: save audio file 
+            File storageDir = new File (this.getFilesDir(), "/audio");
+
+
+
+
+        }
+
 
     }
 
-    public void showNumberPicker(){
+    public void showNumberPicker() {
         NumberPickerDialog dialog = new NumberPickerDialog();
         dialog.setValueChangeListener(this);
-        dialog.show(getSupportFragmentManager(),"Clarity Picker");
+        dialog.show(getSupportFragmentManager(), "Clarity Picker");
     }
-
 
 
 }
