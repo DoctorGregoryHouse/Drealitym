@@ -67,7 +67,7 @@ public class DreamDiaryAdapter extends RecyclerView.Adapter<DreamDiaryAdapter.Dr
             textViewId = itemView.findViewById(R.id.diary_card_view_text_view_id);
             textViewDate = itemView.findViewById(R.id.diary_card_view_text_view_date);
             textViewTitle = itemView.findViewById(R.id.diary_card_view_text_view_title);
-            textViewText = itemView.findViewById(R.id.diary_card_view_text_view_text);
+            textViewText = itemView.findViewById(R.id.diary_card_view_tv_text);
         }
     }
 }

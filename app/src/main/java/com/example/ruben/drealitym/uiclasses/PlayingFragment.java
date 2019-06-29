@@ -31,7 +31,7 @@ public class PlayingFragment extends Fragment {
 
     private MediaPlayer mPlayer;
     private boolean isPlaying = false;
-    private String mFileName;
+    private String mFilePath;
 
     private Handler mSeekBarUpdateHandler;
     private Runnable mUpdateSeekBar = new Runnable() {
@@ -42,14 +42,14 @@ public class PlayingFragment extends Fragment {
         }
     };
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try {
-            mFileName = getActivity().getExternalCacheDir().getAbsolutePath()+ "/recording.3gp";
-        }catch (NullPointerException ex){
-            Log.d(LOG_TAG,"NullPointerException on getActivity().getExternalCacheDir().getAbsolutePath();");
+        if(getArguments() != null){
+            mFilePath = getArguments().getString("path");
+        }else{
+            Log.e(LOG_TAG,"getARguments = null, could not get string path");
+
         }
     }
 
@@ -73,7 +73,7 @@ public class PlayingFragment extends Fragment {
         mSeekBarUpdateHandler = new Handler();
         mPlayer = new MediaPlayer();
         try {
-            mPlayer.setDataSource(mFileName);
+            mPlayer.setDataSource(mFilePath);
             mPlayer.prepare();
 
             initializeSeekBar();

@@ -1,6 +1,8 @@
 package com.example.ruben.drealitym.uiclasses;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,10 +17,16 @@ import android.widget.Toast;
 
 import com.example.ruben.drealitym.R;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 public class RecordingFragment extends Fragment {
@@ -41,12 +49,31 @@ public class RecordingFragment extends Fragment {
     private String mFileName;
     private boolean isRecording;
 
+    private String mFilePath;
+
     //variables for the @updateTimerThread method to display the recording seconds
     private Handler timerThreadHandler;
     private long startHTime = 0L;
     private long timeInMilliseconds = 0L;
     private long timeSwapBuff = 0L;
     private long updatedTime = 0L;
+
+    private boolean permissionToRecordAccepted = false;
+    private String[] permissions = {Manifest.permission.RECORD_AUDIO};
+    public static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case REQUEST_RECORD_AUDIO_PERMISSION:
+                permissionToRecordAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                break;
+        }
+        if(!permissionToRecordAccepted){
+            //TODO: grey out the audio part, implement function to grant permission again by clicking on the audio view
+        }
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -97,8 +124,25 @@ public class RecordingFragment extends Fragment {
             public void onClick(View v) {
                 Toast.makeText(getContext(), "RecordButton Clicked...", Toast.LENGTH_SHORT).show();
 
-                if (isRecording){stopRecording();}else {
-                    startRecording();
+                //request permission to use microphone
+                ActivityCompat.requestPermissions(getActivity(), permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+
+                if (isRecording){stopRecording();
+                }else {
+                    Date timeStamp = Calendar.getInstance().getTime();
+                    String mTimeStamp = new SimpleDateFormat("yyyy-MM-dd-HH-mm").format(timeStamp);
+                    File storageDir = new File (getActivity().getFilesDir(), "/audio/");
+                    storageDir.mkdir();
+                    mFilePath = storageDir +"/"+ mTimeStamp +"_rec.3gp";
+
+                    if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO ) == PackageManager.PERMISSION_GRANTED){
+                        startRecording();
+                    }else {
+                        //permission not granted
+                        //TODO: grey out the audio button
+                    }
+
+
                 }
             }
         });
@@ -110,10 +154,10 @@ public class RecordingFragment extends Fragment {
         mRecorder = new MediaRecorder();
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mRecorder.setOutputFile(mFileName);
+        mRecorder.setOutputFile(mFilePath);
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
         try {
-            mRecorder.prepare();
+            mRecorder.prepare();//TODO: no such file or directory, create the dir correctly
         } catch (IOException e) {
             Log.e(LOG_TAG, "prepare() failed");
         }
@@ -142,7 +186,7 @@ public class RecordingFragment extends Fragment {
         //TODO: change color of the button if he is not usable due not accepting the audio permissions
 
         //calling the interface to pass the relevant information to the underlying activity
-        recordingInterface.onFinishRecording(mFileName, timerMins, timerSecs);
+        recordingInterface.onFinishRecording(mFilePath, timerMins, timerSecs);
 
     }
 

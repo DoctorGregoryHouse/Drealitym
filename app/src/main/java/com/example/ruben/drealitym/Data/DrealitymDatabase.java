@@ -39,12 +39,13 @@ public abstract class DrealitymDatabase extends RoomDatabase {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
+            new PopulateDbAsyncTask(instance).execute();
         }
 
         @Override
         public void onOpen(@NonNull SupportSQLiteDatabase db) {
             super.onOpen(db);
-            new PopulateDbAsyncTask(instance).execute();
+
         }
     };
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void>{

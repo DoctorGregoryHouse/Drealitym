@@ -59,12 +59,15 @@
 
                     <EditText
                         android:id="@+id/fragment_dream_dialog_edt_title"
-                        android:maxLines="1"
+                        android:imeOptions="actionNext"
+                        android:singleLine="true"
+                        android:nextFocusDown="@+id/fragment_dream_dialog_edt_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/fragment_dream_dialog_tv_title"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
+                        android:textColor="#fff"
                         android:backgroundTint="#fff"/>
 
 
