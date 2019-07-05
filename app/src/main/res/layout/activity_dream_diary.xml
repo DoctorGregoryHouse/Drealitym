@@ -10,7 +10,7 @@
         android:id="@+id/activity_dream_diary_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/dream_entry_card_view_item"
+        tools:listitem="@layout/item_cv_dream_entry"
         >
 
     </androidx.recyclerview.widget.RecyclerView>

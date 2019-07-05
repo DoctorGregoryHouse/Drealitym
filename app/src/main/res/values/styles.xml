@@ -20,7 +20,7 @@
     <style name="DreamCardStyle.Subitem" parent="CardView.Dark">
         <item name="cardCornerRadius">12dp</item>
         <item name="android:textColor">#fff</item>
-        <item name="cardBackgroundColor">#CC200010</item>
+        <item name="cardBackgroundColor">@color/colorPrimary</item>
     </style>
 
     <style name="AppTheme.DarkLila" parent="Theme.AppCompat.NoActionBar">

@@ -9,8 +9,6 @@ import android.widget.TextView;
 import com.example.ruben.drealitym.Data.DreamEntry;
 import com.example.ruben.drealitym.R;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +23,7 @@ public class DreamDiaryAdapter extends RecyclerView.Adapter<DreamDiaryAdapter.Dr
     @Override
     public DreamViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.dream_entry_card_view_item, parent, false);
+                .inflate(R.layout.item_cv_dream_entry, parent, false);
         return new DreamViewHolder(itemView);
     }
 

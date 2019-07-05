@@ -130,7 +130,7 @@
         android:layout_below="@+id/activity_main_card_diary">
 
 
-        <include layout="@layout/dream_entry_card_view_item">
+        <include layout="@layout/item_cv_dream_entry">
 
         </include>
 

@@ -303,9 +303,9 @@ public class FragmentReminderPicker extends DialogFragment implements TimePicker
 
             }
         });
-
-        editTextName = view.findViewById(R.id.reminder_fragment_edit_text_name);
-       name =  editTextName.getText().toString();
+//
+//        editTextName = view.findViewById(R.id.reminder_fragment_edit_text_name);
+//       name =  editTextName.getText().toString();
 
     }
 

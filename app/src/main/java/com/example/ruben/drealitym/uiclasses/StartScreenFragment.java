@@ -13,15 +13,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 public class StartScreenFragment extends Fragment {
 
     private String LOG_TAG = "StartScreenFragment";
 
     private Button btnDreamDiary;
+    private CardView cvProfile;
 
     public StartScreenFragment() {
         //Fragment needs at least one constructor
@@ -66,6 +66,13 @@ public class StartScreenFragment extends Fragment {
             }
         });
 
-
+        cvProfile = view.findViewById(R.id.activity_main_card_profile);
+        cvProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent (getContext(), ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

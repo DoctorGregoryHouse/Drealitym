@@ -17,6 +17,7 @@
         <activity android:name=".uiclasses.DreamDiaryActivity"></activity>
         <activity android:name=".uiclasses.SettingsActivity"></activity>
         <activity android:name=".uiclasses.DreamDialogActivity"></activity>
+        <activity android:name=".uiclasses.ProfileActivity"></activity>
 
 
 

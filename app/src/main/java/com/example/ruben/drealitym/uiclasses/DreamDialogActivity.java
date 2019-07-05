@@ -1,7 +1,5 @@
 package com.example.ruben.drealitym.uiclasses;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,10 +8,8 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -67,7 +63,7 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_dream_dialog);
+        setContentView(R.layout.activity_dream_dialog);
 
         Log.d(LOG_TAG, "OnCreate: called...");
         // Hide ActionBar
