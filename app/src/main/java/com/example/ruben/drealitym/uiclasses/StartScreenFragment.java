@@ -21,7 +21,7 @@ public class StartScreenFragment extends Fragment {
     private String LOG_TAG = "StartScreenFragment";
 
     private Button btnDreamDiary;
-    private CardView cvProfile;
+    private CardView cvRealityChecks;
 
     public StartScreenFragment() {
         //Fragment needs at least one constructor
@@ -66,13 +66,15 @@ public class StartScreenFragment extends Fragment {
             }
         });
 
-        cvProfile = view.findViewById(R.id.activity_main_card_profile);
-        cvProfile.setOnClickListener(new View.OnClickListener() {
+        cvRealityChecks = view.findViewById(R.id.activity_main_card_reminders);
+        cvRealityChecks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent (getContext(), ProfileActivity.class);
+                Intent intent = new Intent(getContext(), RealityCheckActivity.class);
                 startActivity(intent);
             }
         });
+
+
     }
 }

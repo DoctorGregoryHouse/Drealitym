@@ -18,20 +18,15 @@
             android:textColor="@color/colorTextDarkBackground"
             android:textSize="24dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/colorTextDarkBackground"
-            android:text="From 00.:00 to 10:12"/>
-
     </LinearLayout>
 
     <TextView
         android:layout_weight="8"
         android:layout_width="0dp"
         android:layout_height="match_parent" />
+
     <Switch
+        android:focusable="false"
         android:layout_gravity="center"
         android:layout_marginEnd="16dp"
         android:layout_weight="4"

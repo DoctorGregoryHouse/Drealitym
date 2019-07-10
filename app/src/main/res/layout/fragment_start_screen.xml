@@ -92,7 +92,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Reminders"
+            android:text="REALITY CHECKS"
             android:textColor="#fff"
             android:gravity="center"/>
 

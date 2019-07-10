@@ -11,35 +11,36 @@ import com.example.ruben.drealitym.R;
 
 import java.util.List;
 
-public class RealityCheckAdapter extends BaseExpandableListAdapter {
+public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
-    private Context mContext;
-    private List<String> mDays;
-    private List<String> childList;
+    private Context context;
+    private List<String> exlvTitle;
+    private List<String> exlvContent;
 
-    public RealityCheckAdapter(Context mContext, List<String> mDays, List<String> childList) {
-        this.mContext = mContext;
-        this.mDays = mDays;
-        this.childList = childList;
-            }
-    //there are only seven Days, for each day one group
+    public CustomExpandableListAdapter(Context context, List<String> exlvTitle, List<String> exlvContent) {
+        this.context = context;
+        this.exlvTitle = exlvTitle;
+        this.exlvContent = exlvContent;
+    }
+
     @Override
     public int getGroupCount() {
-        return 7;
+        return exlvTitle.size();
     }
-    //every group has 3 childs
+
     @Override
     public int getChildrenCount(int groupPosition) {
-        return 3;
+        return exlvContent.size();
     }
+
     @Override
     public Object getGroup(int groupPosition) {
-        return this.mDays.get(groupPosition);
+        return exlvTitle.get(groupPosition);
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return childPosition;
+        return exlvContent.get(childPosition);
     }
 
     @Override
@@ -57,42 +58,34 @@ public class RealityCheckAdapter extends BaseExpandableListAdapter {
         return false;
     }
 
-    //this method  returns the view of the child
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 
-        String listTitle = (String) getGroup(groupPosition);
-
-        if(convertView == null){
-            LayoutInflater inflater = (LayoutInflater) this.mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.item_ex_lv_reality_check, null);
+        String groupTitle = exlvTitle.get(groupPosition);
+        if (convertView == null){
+            LayoutInflater inflater  = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.item_ex_lv_reality_check,null);
         }
         TextView tvTitle = convertView.findViewById(R.id.item_reality_check_title);
-        tvTitle.setText(listTitle);
-
+        tvTitle.setText(groupTitle);
         return convertView;
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
-        final String childText = (String) getChild(groupPosition, childPosition);
+        String groupChild = exlvContent.get(childPosition);
         if (convertView == null){
-            LayoutInflater inflater = (LayoutInflater) this.mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView  = inflater.inflate(R.layout.subitem_ex_lv_reality_check, null);
+            LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.subitem_ex_lv_reality_check, null);
         }
-
-        TextView tvChild = (TextView) convertView.findViewById(R.id.subitem_tv_reality_check);
-        tvChild.setText(childText);
-
+        TextView tvContent  = convertView.findViewById(R.id.subitem_tv_reality_check);
+        tvContent.setText(groupChild);
         return convertView;
     }
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return false;
+        return true;
     }
-
-
-
 }
