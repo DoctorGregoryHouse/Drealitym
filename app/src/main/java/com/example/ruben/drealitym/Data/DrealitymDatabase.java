@@ -9,7 +9,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {DreamEntry.class, ReminderEntry.class, }, version = 1, exportSchema = false)
+@Database(entities = {DreamEntry.class, ReminderEntry.class, RealityCheckEntry.class /*komma here ? */}, version = 1, exportSchema = false)
 public abstract class DrealitymDatabase extends RoomDatabase {
 
     //DrealitymDatabase;
@@ -17,7 +17,7 @@ public abstract class DrealitymDatabase extends RoomDatabase {
     private static DrealitymDatabase instance;
 
     public abstract DreamDao dreamDao(); // we can use this abstract method to access the DataBase operation methods created in the DreamDao interface
-    public abstract ReminderDao reminderDao();
+    public abstract RealityCheckDao realityCheckDao();
 
     //synchronized means that only one thread at a time can access this method
     public static synchronized DrealitymDatabase getInstance(Context context){

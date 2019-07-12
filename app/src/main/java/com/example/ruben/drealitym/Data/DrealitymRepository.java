@@ -10,28 +10,24 @@ import androidx.lifecycle.LiveData;
 public class DrealitymRepository {
 
     private DreamDao dreamDao;
-    private ReminderDao reminderDao;
+    private RealityCheckDao realityCheckDao;
 
     private LiveData<List<DreamEntry>> allDreams;
+    private LiveData<List<RealityCheckEntry>> allRealityChecks;
 
-
-    private LiveData<List<ReminderEntry>> allReminders;
     //
     public DrealitymRepository(Application application){ //application is a subclass of context
         DrealitymDatabase database = DrealitymDatabase.getInstance(application);
 
         //The statements below call the abstract method of the Database class, usual its not possible to call abstract classes, but room creates the necessary code to call the class
         dreamDao = database.dreamDao();
-        //reminderDao = database.reminderDao();
-
         allDreams =  dreamDao.getAllDreams();
-        //reminderDao.getAllReminders();
 
-
+        //Statements for the RealityChecks
+        realityCheckDao = database.realityCheckDao();
+        allRealityChecks = realityCheckDao.getAllRealityChecks();
     }
 
-    //databaseOperations Dream table
-    //region
     public void insertDream(DreamEntry dreamEntry){
         new InsertDreamAsyncTask(dreamDao).execute(dreamEntry);
     }
@@ -42,11 +38,12 @@ public class DrealitymRepository {
     public void deleteDream(DreamEntry dreamEntry){
         new DeleteDreamAsyncTask(dreamDao).execute(dreamEntry);
     }
-
     public void deleteAllDreams(){
         new DeleteAllDreamsAsyncTask(dreamDao).execute();
     }
 
+    //AsyncTasks for the DreamDatabase operations
+    //region
     public LiveData<List<DreamEntry>> getAllDreams(){
         return allDreams;
     }
@@ -110,81 +107,74 @@ public class DrealitymRepository {
     }
     //endregion
 
+    public void insertRealityCheck(RealityCheckEntry realityCheckEntry){
+        new InsertRealityCheckTask(realityCheckDao).execute(realityCheckEntry);
+    }
+    public void updateRealtiyCheck(RealityCheckEntry realityCheckEntry){
+        new UpdateRealityCheckTask(realityCheckDao).execute(realityCheckEntry);
+    }
+    public void deleteRealityCheck(RealityCheckEntry realityCheckEntry){
+        new InsertRealityCheckTask(realityCheckDao).execute(realityCheckEntry);
+    }
+    public void deleteAllRealityChecks(){
+        new DeleteAllRealityChecksTask(realityCheckDao).execute();
+    }
 
-    //database operations Reminder table
+    //AsyncTasks for the RealityCheck database operations
     //region
-    public void insertReminder(ReminderEntry reminderEntry){
+    private static class InsertRealityCheckTask extends AsyncTask<RealityCheckEntry, Void, Void>{
+        private RealityCheckDao realityCheckDao;
 
-    }
-    public void updateReminder(ReminderEntry reminderEntry){
-
-    }
-    public void deleteReminder(ReminderEntry reminderEntry){
-
-    }
-    public void deleteAllReminders(){
-
-    }
-    public LiveData<List<ReminderEntry>> getAllReminders() {
-        return allReminders;
-    }
-
-    private static class InsertReminderAsyncTask extends AsyncTask<ReminderEntry, Void, Void>{
-        private ReminderDao reminderDao;
-
-        private InsertReminderAsyncTask(ReminderDao reminderDao){
-            this.reminderDao = reminderDao;
-        }
+        private InsertRealityCheckTask(RealityCheckDao realityCheckDao){
+            this.realityCheckDao = realityCheckDao;}
 
         @Override
-        protected Void doInBackground(ReminderEntry... reminderEntries) {
-            reminderDao.insert(reminderEntries[0]);
+        protected Void doInBackground(RealityCheckEntry... realityCheckEntries) {
+            realityCheckDao.insert(realityCheckEntries[0]);
             return null;
         }
     }
 
-    private static class UpdateReminderAsyncTask extends AsyncTask<ReminderEntry, Void, Void>{
-        private ReminderDao reminderDao;
+    private static class UpdateRealityCheckTask extends AsyncTask<RealityCheckEntry, Void, Void>{
+        private RealityCheckDao realityCheckDao;
 
-        private UpdateReminderAsyncTask(ReminderDao reminderDao){
-            this.reminderDao = reminderDao;
+        public UpdateRealityCheckTask(RealityCheckDao realityCheckDao) {
+            this.realityCheckDao = realityCheckDao;
         }
-
         @Override
-        protected Void doInBackground(ReminderEntry... reminderEntries) {
-            reminderDao.update(reminderEntries[0]);
+        protected Void doInBackground(RealityCheckEntry... realityCheckEntries) {
+            realityCheckDao.update(realityCheckEntries[0]);
             return null;
         }
     }
 
-    private static class DeleteReminderAsyncTask extends AsyncTask<ReminderEntry, Void, Void>{
-        private ReminderDao reminderDao;
+    private static class DeleteRealityCheckAsyncTask extends AsyncTask<RealityCheckEntry, Void, Void>{
+        private RealityCheckDao realityCheckDao;
 
-        private DeleteReminderAsyncTask(ReminderDao reminderDao){
-            this.reminderDao = reminderDao;
+        public DeleteRealityCheckAsyncTask(RealityCheckDao realityCheckDao) {
+            this.realityCheckDao = realityCheckDao;
         }
 
         @Override
-        protected Void doInBackground(ReminderEntry... reminderEntries) {
-            reminderDao.delete(reminderEntries[0]);
+        protected Void doInBackground(RealityCheckEntry... realityCheckEntries) {
+            realityCheckDao.delete(realityCheckEntries[0]);
             return null;
         }
     }
 
-    private static class DeleteAllReminderAsyncTask extends AsyncTask<Void, Void, Void>{
-        private ReminderDao reminderDao;
+    private static class DeleteAllRealityChecksTask extends AsyncTask<Void, Void, Void>{
+        private RealityCheckDao realityCheckDao;
 
-        private DeleteAllReminderAsyncTask(ReminderDao reminderDao){
-            this.reminderDao = reminderDao;
+        public DeleteAllRealityChecksTask(RealityCheckDao realityCheckDao) {
+            this.realityCheckDao = realityCheckDao;
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            reminderDao.deleteAllReminders();
+            realityCheckDao.deleteAllRealityChecks();
             return null;
         }
     }
     //endregion
-
 
 }
