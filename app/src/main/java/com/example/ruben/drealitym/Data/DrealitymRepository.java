@@ -119,6 +119,7 @@ public class DrealitymRepository {
     public void deleteAllRealityChecks(){
         new DeleteAllRealityChecksTask(realityCheckDao).execute();
     }
+    public LiveData<List<RealityCheckEntry>> getAllRealityChecks(){return  allRealityChecks;}
 
     //AsyncTasks for the RealityCheck database operations
     //region

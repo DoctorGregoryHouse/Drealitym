@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.example.ruben.drealitym.R;
@@ -16,6 +17,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     private Context context;
     private List<String> exlvTitle;
     private List<String> exlvContent;
+    OnItemClickListener listener;
 
     public CustomExpandableListAdapter(Context context, List<String> exlvTitle, List<String> exlvContent) {
         this.context = context;
@@ -72,7 +74,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
         String groupChild = exlvContent.get(childPosition);
         if (convertView == null){
@@ -81,6 +83,15 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         }
         TextView tvContent  = convertView.findViewById(R.id.subitem_tv_reality_check);
         tvContent.setText(groupChild);
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(listener != null && groupPosition != ExpandableListView.INVALID_POSITION)
+                listener.onItemClick(groupPosition, childPosition);
+            }
+        });
+
         return convertView;
     }
 
@@ -88,4 +99,20 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
+
+
+
+
+
+
+    public interface OnItemClickListener {
+        void onItemClick(int groupPosition, int childPosition);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener = listener;
+    }
+
+
 }
+

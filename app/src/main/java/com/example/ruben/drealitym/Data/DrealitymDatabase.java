@@ -9,7 +9,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {DreamEntry.class, ReminderEntry.class, RealityCheckEntry.class /*komma here ? */}, version = 1, exportSchema = false)
+@Database(entities = {DreamEntry.class, RealityCheckEntry.class /*komma here ? */}, version = 2, exportSchema = false)
 public abstract class DrealitymDatabase extends RoomDatabase {
 
     //DrealitymDatabase;
