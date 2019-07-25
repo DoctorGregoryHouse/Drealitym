@@ -9,7 +9,11 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
+import com.example.ruben.drealitym.Data.RealityCheckEntry;
 import com.example.ruben.drealitym.Data.RealityCheckViewModel;
 import com.example.ruben.drealitym.HelperClasses.CustomExpandableListAdapter;
 import com.example.ruben.drealitym.HelperClasses.TimePickerFragment;
@@ -28,6 +32,7 @@ public class RealityCheckActivity extends AppCompatActivity implements TimePicke
     List<String> exlvContentStrings;
 
     RealityCheckViewModel viewModel;
+    LiveData<List<RealityCheckEntry>> realityCheckEntryList;
 
 
     @Override
@@ -43,7 +48,14 @@ public class RealityCheckActivity extends AppCompatActivity implements TimePicke
 
         exlvTitleStrings = new ArrayList<>();
         exlvContentStrings = new ArrayList<>();
-        viewModel = new RealityCheckViewModel(getApplication());
+
+        viewModel = ViewModelProviders.of(this).get(RealityCheckViewModel.class);
+        viewModel.getAllRealityChecks().observe(this, new Observer<List<RealityCheckEntry>>() {
+            @Override
+            public void onChanged(List<RealityCheckEntry> realityCheckEntries) {
+                listAdapter.setRealityCheckEntries(realityCheckEntries);
+            }
+        });
 
 
         exlvTitleStrings.add("Monday");
@@ -65,12 +77,12 @@ public class RealityCheckActivity extends AppCompatActivity implements TimePicke
         listAdapter = new CustomExpandableListAdapter(this, exlvTitleStrings,exlvContentStrings);
         listview.setAdapter(listAdapter);
 
+
+        //ClickListener for the TimePicker
+        //TODO: distinguish between Start and End time
         listAdapter.setOnItemClickListener(new CustomExpandableListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int groupPosition, int childPosition) {
-
-
-
                 TimePickerFragment timePickerFragment = new TimePickerFragment();
                 timePickerFragment.show(getSupportFragmentManager(), "timePicker");
 

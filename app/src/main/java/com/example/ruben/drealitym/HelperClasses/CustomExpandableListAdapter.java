@@ -8,6 +8,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+import com.example.ruben.drealitym.Data.RealityCheckEntry;
 import com.example.ruben.drealitym.R;
 
 import java.util.List;
@@ -15,14 +16,27 @@ import java.util.List;
 public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
+
+    // Data for the ListView
     private List<String> exlvTitle;
-    private List<String> exlvContent;
+    List<RealityCheckEntry> realityCheckEntries;
+
+    //DUMMY
+    List<String> exlvContent;
+
+
     OnItemClickListener listener;
 
     public CustomExpandableListAdapter(Context context, List<String> exlvTitle, List<String> exlvContent) {
         this.context = context;
         this.exlvTitle = exlvTitle;
-        this.exlvContent = exlvContent;
+
+        //DUMMY
+        exlvContent.add("Von: 8:00");
+        exlvContent.add("Bis: 16:00");
+        exlvContent.add("Alle 20 minuten");
+        exlvContent.add("Uhrzeicheck");
+        exlvContent.add("Notifications on");
     }
 
     @Override
@@ -32,7 +46,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return exlvContent.size();
+        return 7;
     }
 
     @Override
@@ -100,11 +114,22 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
+    public void setRealityCheckEntries(List<RealityCheckEntry> realityCheckEntries){
+        this.realityCheckEntries = realityCheckEntries;
+    }
+
+
+    private String[] prepareData(int groupPosition){
+        RealityCheckEntry entry = realityCheckEntries.get(groupPosition);
+        //TODO: create data strings to display 
+        int startHour = entry.getStartHour();
+        int startMinute = entry.getStartMinute();
+        return null;
+    }
 
 
 
-
-
+    //Interface implemented in the RealityCheckActivity to handle the click on the childItem
     public interface OnItemClickListener {
         void onItemClick(int groupPosition, int childPosition);
     }
