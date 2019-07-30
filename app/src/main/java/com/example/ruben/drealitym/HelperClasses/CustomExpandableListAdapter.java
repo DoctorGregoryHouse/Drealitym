@@ -21,8 +21,6 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     private List<String> exlvTitle;
     List<RealityCheckEntry> realityCheckEntries;
 
-    //DUMMY
-    List<String> exlvContent;
 
 
     OnItemClickListener listener;
@@ -30,13 +28,6 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     public CustomExpandableListAdapter(Context context, List<String> exlvTitle, List<String> exlvContent) {
         this.context = context;
         this.exlvTitle = exlvTitle;
-
-        //DUMMY
-        exlvContent.add("Von: 8:00");
-        exlvContent.add("Bis: 16:00");
-        exlvContent.add("Alle 20 minuten");
-        exlvContent.add("Uhrzeicheck");
-        exlvContent.add("Notifications on");
     }
 
     @Override
@@ -46,7 +37,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return 7;
+        return 3;
     }
 
     @Override
@@ -56,7 +47,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return exlvContent.get(childPosition);
+        return realityCheckEntries.get(groupPosition);
     }
 
     @Override
@@ -90,11 +81,16 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
-        String groupChild = exlvContent.get(childPosition);
+        String string  = new String() ;
+        //String groupChild = exlvContent.get(childPosition);
+        String[] strings = getDataStrings(groupPosition);
+        String groupChild = strings[childPosition];
+
         if (convertView == null){
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.subitem_ex_lv_reality_check, null);
         }
+
         TextView tvContent  = convertView.findViewById(R.id.subitem_tv_reality_check);
         tvContent.setText(groupChild);
 
@@ -105,6 +101,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
                 listener.onItemClick(groupPosition, childPosition);
             }
         });
+
 
         return convertView;
     }
@@ -119,12 +116,51 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
 
-    private String[] prepareData(int groupPosition){
-        RealityCheckEntry entry = realityCheckEntries.get(groupPosition);
-        //TODO: create data strings to display 
+    private String[] getDataStrings(int groupPosition){
+
+        RealityCheckEntry entry = realityCheckEntries.get(groupPosition );
+
+        StringBuilder stringBuilder = new StringBuilder();
         int startHour = entry.getStartHour();
         int startMinute = entry.getStartMinute();
-        return null;
+
+        if(startHour < 10 ){
+            stringBuilder.append("0");
+        }
+        stringBuilder.append(startHour);
+        stringBuilder.append(":");
+        if(startMinute < 10 ){
+            stringBuilder.append("0");
+        }
+        stringBuilder.append(startMinute);
+
+        String startTime = stringBuilder.toString();
+
+        stringBuilder = new StringBuilder();
+        int stopHour = entry.getStopHour();
+        int stopMinute = entry.getStopMinute();
+
+        if(stopHour < 10 ){
+            stringBuilder.append("0");
+        }
+        stringBuilder.append(stopHour);
+        stringBuilder.append(":");
+        if(stopMinute < 10 ){
+            stringBuilder.append("0");
+        }
+        stringBuilder.append(stopMinute);
+
+        String stopTime = stringBuilder.toString();
+
+        int interval = entry.getInterval();
+        stringBuilder = new StringBuilder();
+        stringBuilder.append("Interval: ");
+        stringBuilder.append(interval);
+
+        String intervalTime = stringBuilder.toString();
+
+        String[] returnArray = {startTime,stopTime,intervalTime};
+        return returnArray;
     }
 
 

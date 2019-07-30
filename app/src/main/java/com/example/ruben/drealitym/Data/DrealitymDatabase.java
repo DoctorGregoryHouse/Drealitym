@@ -50,13 +50,26 @@ public abstract class DrealitymDatabase extends RoomDatabase {
     };
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void>{
         private DreamDao mDreamDao;
+        private RealityCheckDao mRealityCheckDao;
 
         public PopulateDbAsyncTask(DrealitymDatabase db){
             mDreamDao = db.dreamDao();
+            mRealityCheckDao = db.realityCheckDao();
         }
         @Override
         protected Void doInBackground(Void... voids) {
             mDreamDao.insert(new DreamEntry(1,1,"100","DummyDreamTitle","DummyDreamText", 1, "//dummy/path/audio"));
+
+            //TODO: No need for the first row in the db, crate enum or HashMap or StringArray ( ? ) for the interval to preset certain values
+            //TODO: At the applications first start, this entry should be created for every user instead of this dummy data
+            mRealityCheckDao.insert(new RealityCheckEntry(1,6,30,18,45,2,2));
+            mRealityCheckDao.insert(new RealityCheckEntry(2,6,30,18,45,2,2));
+            mRealityCheckDao.insert(new RealityCheckEntry(3,6,30,18,45,2,2));
+            mRealityCheckDao.insert(new RealityCheckEntry(4,6,30,18,45,2,2));
+            mRealityCheckDao.insert(new RealityCheckEntry(5,6,30,18,45,2,2));
+            mRealityCheckDao.insert(new RealityCheckEntry(6,10,30,22,0,8,2));
+            mRealityCheckDao.insert(new RealityCheckEntry(7,10,30,22,0,4,2));
+
             return null;
         }
     }
