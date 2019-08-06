@@ -1,5 +1,6 @@
 package com.example.ruben.drealitym.uiclasses;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,10 +27,18 @@ import java.util.Date;
 public class DreamDialogActivity extends AppCompatActivity implements RecordingFragment.recordingInterface, NumberPicker.OnValueChangeListener {
 
     //TODO: add permission request
+
+    //CONSTANTS
     private String LOG_TAG = "DreamDialogActivity";
+
+    public static final int REQUEST_CODE_EXISTING_ENTRY = 10;
+    public static final int REQUEST_CODE_NEW_ENTRY = 20;
+    public static final String EXTRA_REQUEST_CODE = "com.example.ruben.drealitym.uiclasses.EXTRA_REQUEST_CODE";
+
 
     private DreamDialogViewModel viewModel;
     private FragmentManager fragmentManager;
+    private int mRequestCode;
     /*
     DreamClarity defines if its lucid pre-lucid or normal dream
     DreamDate adds the date of the dream saved
@@ -45,6 +54,7 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
     private EditText mEdtText;
     private Button btnSave;
     private Button btnOpenDialog;
+    private Button btnEdit;
 
     //when NumberPickerDialog is called and the value changes, this method triggers
     @Override
@@ -64,12 +74,17 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dream_dialog);
-
         Log.d(LOG_TAG, "OnCreate: called...");
+
+        Intent intent = getIntent();
+
+        mRequestCode = intent.getIntExtra(EXTRA_REQUEST_CODE, -1);
+
         // Hide ActionBar
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
+
         viewModel = ViewModelProviders.of(this).get(DreamDialogViewModel.class);
         mEdtTitle = findViewById(R.id.fragment_dream_dialog_edt_title);
         mEdtText = findViewById(R.id.fragment_dream_dialog_edt_text);
@@ -96,6 +111,23 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
                 showNumberPicker();
             }
         });
+
+        btnEdit = findViewById(R.id.fragment_dream_dialog_btn_edit);
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: handle the edit click
+            }
+        });
+
+        if (mRequestCode != -1 && mRequestCode == REQUEST_CODE_EXISTING_ENTRY){
+
+            btnOpenDialog.setVisibility(View.GONE);
+
+        }
+
+
+
     }
 
     @Override
@@ -127,6 +159,7 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
         String text = mEdtText.getText().toString();
 
         if(title.trim().isEmpty()) {
+            //TODO: STRING_VALUE
             Toast.makeText(this, "Please enter a title!", Toast.LENGTH_SHORT).show();
             return;
         }

@@ -1,5 +1,6 @@
 package com.example.ruben.drealitym.uiclasses;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
@@ -19,8 +20,20 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class DreamDiaryActivity extends AppCompatActivity {
+public class DreamDiaryActivity extends AppCompatActivity /*implements DreamDiaryAdapter.OnItemClickListener */{
+
+
+    //CONSTANTS
     private final String LOG_TAG = "DreamDiaryActivity";
+
+    public static final String EXTRA_ID ="com.example.ruben.drealitym.uiclasses.EXTRA_ID";
+    public static final String EXTRA_TYPE = "com.example.ruben.drealitym.uiclasses.EXTRA_TYPE";
+    public static final String EXTRA_CHECKFILE = "cCHECKFILE";
+    public static final String EXTRA_DATE = "com.example.ruben.drealitym.uiclasses.EXTRA_DATE";
+    public static final String EXTRA_TITLE = "com.example.ruben.drealitym.uiclasses.EXTRA_TITLE";
+    public static final String EXTRA_TEXT = "com.example.ruben.drealitym.uiclasses.EXTRA_TEXT";
+    public static final String EXTRA_AUDIO_PATH = "com.example.ruben.drealitym.uiclasses.EXTRA_AUDIO_PATH";
+
     private DreamViewModel dreamViewModel;
 
 
@@ -49,8 +62,34 @@ public class DreamDiaryActivity extends AppCompatActivity {
             public void onChanged(List<DreamEntry> dreamEntries) {
                 //here update the recyclerview
                 adapter.setDreams(dreamEntries);
+                adapter.setOnItemClickListener(new DreamDiaryAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(DreamEntry entry) {
+
+                        Intent intent = new Intent(DreamDiaryActivity.this, DreamDialogActivity.class);
+                        //this indicates that the dream is not a new dream so the data can be loaded into the called activity
+                        intent.putExtra(DreamDialogActivity.EXTRA_REQUEST_CODE,DreamDialogActivity.REQUEST_CODE_EXISTING_ENTRY);
+
+                        intent.putExtra(EXTRA_ID,entry.getId());
+                        intent.putExtra(EXTRA_TYPE,entry.getType());
+                        intent.putExtra(EXTRA_CHECKFILE,entry.getCheckFile());
+                        intent.putExtra(EXTRA_DATE,entry.getDate());
+                        intent.putExtra(EXTRA_TITLE,entry.getTitle());
+                        intent.putExtra(EXTRA_TEXT, entry.getText());
+
+                        if(entry.getCheckFile() == 0 ){
+                            intent.putExtra(EXTRA_AUDIO_PATH,entry.getAudioPath());
+                        }
+                        startActivity(intent);
+
+
+                    }
+                });
                 Toast.makeText(DreamDiaryActivity.this, "onChanged", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+
+
 }

@@ -82,7 +82,6 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
         String string  = new String() ;
-        //String groupChild = exlvContent.get(childPosition);
         String[] strings = getDataStrings(groupPosition);
         String groupChild = strings[childPosition];
 

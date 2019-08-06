@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class DreamDiaryAdapter extends RecyclerView.Adapter<DreamDiaryAdapter.DreamViewHolder> {
 
     private List<DreamEntry> Dreams = new ArrayList<>();
+    private OnItemClickListener listener;
 
     @NonNull
     @Override
@@ -43,14 +44,14 @@ public class DreamDiaryAdapter extends RecyclerView.Adapter<DreamDiaryAdapter.Dr
     }
 
     //this method gets the list into the recyclerview
-    public void setDreams(List<DreamEntry> Dreams){
+    public void setDreams(List<DreamEntry> Dreams) {
         this.Dreams = Dreams;
         notifyDataSetChanged();
         //TODO: update @method notifyDataSetChanged();
     }
 
 
-    class DreamViewHolder extends RecyclerView.ViewHolder{
+    class DreamViewHolder extends RecyclerView.ViewHolder {
 
         private TextView textViewId;
         private TextView textViewDate;
@@ -66,6 +67,29 @@ public class DreamDiaryAdapter extends RecyclerView.Adapter<DreamDiaryAdapter.Dr
             textViewDate = itemView.findViewById(R.id.diary_card_view_text_view_date);
             textViewTitle = itemView.findViewById(R.id.diary_card_view_text_view_title);
             textViewText = itemView.findViewById(R.id.diary_card_view_tv_text);
+
+            //this is the itemclicklistener for every click
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    int position = getAdapterPosition();
+                    if (listener != null && position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(Dreams.get(position));
+                    }
+                }
+            });
+
         }
     }
+
+    public interface OnItemClickListener {
+        void onItemClick(DreamEntry entry);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+
 }

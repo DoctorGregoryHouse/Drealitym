@@ -53,6 +53,7 @@ public class StartScreenFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), DreamDialogActivity.class);
+                intent.putExtra(DreamDialogActivity.EXTRA_REQUEST_CODE,DreamDialogActivity.REQUEST_CODE_NEW_ENTRY);
                 startActivity(intent);
             }
         });
