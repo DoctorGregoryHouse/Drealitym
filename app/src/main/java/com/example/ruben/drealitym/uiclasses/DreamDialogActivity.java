@@ -29,7 +29,11 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
     //TODO: add permission request
 
     //CONSTANTS
-    private String LOG_TAG = "DreamDialogActivity";
+    private static final String LOG_TAG = "DreamDialogActivity";
+
+    public static final int AUDIO_FILE = 1;
+    public static final int NO_AUDIO_FILE = 0;
+
 
     public static final int REQUEST_CODE_EXISTING_ENTRY = 10;
     public static final int REQUEST_CODE_NEW_ENTRY = 20;
@@ -38,7 +42,20 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
 
     private DreamDialogViewModel viewModel;
     private FragmentManager fragmentManager;
-    private int mRequestCode;
+    private Fragment audioFragment;
+
+    //Attributes passed by intent
+    private int sID;
+    private int sRequestCode;
+    private int sCheckFile;
+    private int sDreamType;
+    private int sDreamFavourite;
+    private String sDreamFilePath;
+    private String sDreamTitle;
+    private String sDreamText;
+    private String sDreamDate;
+
+
     /*
     DreamClarity defines if its lucid pre-lucid or normal dream
     DreamDate adds the date of the dream saved
@@ -76,9 +93,10 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
         setContentView(R.layout.activity_dream_dialog);
         Log.d(LOG_TAG, "OnCreate: called...");
 
+        //Intent for getting extras
         Intent intent = getIntent();
 
-        mRequestCode = intent.getIntExtra(EXTRA_REQUEST_CODE, -1);
+        sRequestCode = intent.getIntExtra(EXTRA_REQUEST_CODE, -1);
 
         // Hide ActionBar
         if (getSupportActionBar() != null) {
@@ -93,14 +111,13 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
         if (savedInstanceState == null) {
             fragmentManager = getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            Fragment fragment = new RecordingFragment();
-            transaction.add(R.id.fragment_dream_dialog_audio_container, fragment).commit();
+            audioFragment = new RecordingFragment();
+            transaction.add(R.id.fragment_dream_dialog_audio_container, audioFragment).commit();
         }
         btnSave = findViewById(R.id.fragment_dream_dialog_btn_save);
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //save dream to Room database
                 saveDream();
             }
         });
@@ -112,20 +129,58 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
             }
         });
 
+        if (sRequestCode != -1 && sRequestCode == REQUEST_CODE_EXISTING_ENTRY) {
+            btnOpenDialog.setVisibility(View.GONE);
+            btnSave.setVisibility(View.GONE);
+
+            intent.getIntExtra(DreamDiaryActivity.EXTRA_ID, -1);
+
+            sCheckFile = intent.getIntExtra(DreamDiaryActivity.EXTRA_CHECKFILE, 0);
+            if (sCheckFile == AUDIO_FILE) {
+                replaceRecordingFragment(intent.getStringExtra(DreamDiaryActivity.EXTRA_AUDIO_PATH), 1, 1);
+            } else {
+                fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().hide(audioFragment).commit();
+
+            }
+
+            mEdtTitle.setText(intent.getStringExtra(DreamDiaryActivity.EXTRA_TITLE));
+            mEdtTitle.setEnabled(false);
+            mEdtText.setText(intent.getStringExtra(DreamDiaryActivity.EXTRA_TEXT));
+            mEdtText.setEnabled(false);
+
+
+        }
+
         btnEdit = findViewById(R.id.fragment_dream_dialog_btn_edit);
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO: handle the edit click
+                mEdtTitle.setEnabled(true);
+                mEdtText.setEnabled(true);
+
+                btnOpenDialog.setVisibility(View.VISIBLE);
+                btnSave.setVisibility(View.VISIBLE);
+
+                btnEdit.setVisibility(View.GONE);
+
+
+                //TODO: if a file path exists, the old one should not be overriden so the audio file gets saved in place where the preceding file was stored
+//                Bundle bundle = new Bundle();
+//                bundle.putString(PlayingFragment.ARGUMENT_AUDIO_PATH, filePath);
+//                audioFragment.setArguments(bundle);
+//                transaction.replace(R.id.fragment_dream_dialog_audio_container, audioFragment).commit();
+
+                audioFragment = new PlayingFragment();
+                fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.fragment_dream_dialog_audio_container, audioFragment).commit();
+
+
+
+
             }
         });
-
-        if (mRequestCode != -1 && mRequestCode == REQUEST_CODE_EXISTING_ENTRY){
-
-            btnOpenDialog.setVisibility(View.GONE);
-
-        }
-
 
 
     }
@@ -136,6 +191,7 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
         //determine current date and build string
         Date current = Calendar.getInstance().getTime();
         dDreamDate = new SimpleDateFormat("yyyy-MM-dd").format(current);
+
     }
 
     //This is the interface callback from the recording fragment
@@ -145,38 +201,42 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
         dDreamFilePath = filePath;
         //TODO: maybe here can be determined whether there is an audio file or not
         Toast.makeText(this, "Mins: " + timerMins + "secs " + timerSecs, Toast.LENGTH_SHORT).show();
+        replaceRecordingFragment(filePath, timerMins, timerSecs);
+
+    }
+
+    private void replaceRecordingFragment(String filePath, int timerMins, int timerSecs) {
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        Fragment fragment = new PlayingFragment();
+        audioFragment = new PlayingFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("path",filePath);
-        fragment.setArguments(bundle);
-        transaction.replace(R.id.fragment_dream_dialog_audio_container, fragment).commit();
+        bundle.putString(PlayingFragment.ARGUMENT_AUDIO_PATH, filePath);
+        audioFragment.setArguments(bundle);
+        transaction.replace(R.id.fragment_dream_dialog_audio_container, audioFragment).commit();
     }
 
     private void saveDream() {
         String title = mEdtTitle.getText().toString();
         String text = mEdtText.getText().toString();
 
-        if(title.trim().isEmpty()) {
+        if (title.trim().isEmpty()) {
             //TODO: STRING_VALUE
             Toast.makeText(this, "Please enter a title!", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if(dDreamFilePath == null){
-            dDreamHasAudioFile = 1;
-        }
-        else{
-            dDreamHasAudioFile = 0;
+        if (dDreamFilePath == null) {
+            dDreamHasAudioFile = NO_AUDIO_FILE;
+        } else {
+            dDreamHasAudioFile = AUDIO_FILE;
+
         }
         //TODO: add int's for month year and day, change @param dDreamHasAudioFile to boolean
-        DreamEntry entry = new DreamEntry(dDreamClarity,dDreamHasAudioFile,dDreamDate,title,text,0,dDreamFilePath);
+        DreamEntry entry = new DreamEntry(dDreamClarity, dDreamHasAudioFile, dDreamDate, title, text, 0, dDreamFilePath);
         viewModel.insert(entry);
         finish();
         //TODO: add animation to the "my diary" CardView on the main screen that shows the dream was added to the Diary. sth like a stroke lighting up in the action color
-        }
-
+    }
 
 
     public void showNumberPicker() {

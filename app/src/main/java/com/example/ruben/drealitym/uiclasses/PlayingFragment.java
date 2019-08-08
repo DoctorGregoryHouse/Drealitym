@@ -23,7 +23,11 @@ import java.io.IOException;
 
 public class PlayingFragment extends Fragment {
 
+    //CONSTANTS
     private final String LOG_TAG ="PlayingFragment";
+
+    public final static String ARGUMENT_AUDIO_PATH = "com.example.ruben.drealitym.uiclasses.ARGUMENT_AUDIO_PATH";
+
 
     private SeekBar mSeekBar;
     private ImageButton iBtnPlay;
@@ -46,7 +50,7 @@ public class PlayingFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(getArguments() != null){
-            mFilePath = getArguments().getString("path");
+            mFilePath = getArguments().getString(ARGUMENT_AUDIO_PATH);
         }else{
             Log.e(LOG_TAG,"getARguments = null, could not get string path");
 
