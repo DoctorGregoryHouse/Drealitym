@@ -43,16 +43,15 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
     private DreamDialogViewModel viewModel;
     private FragmentManager fragmentManager;
     private Fragment audioFragment;
+    private boolean editButtonClicked = false;
 
     //Attributes passed by intent
     private int sID;
     private int sRequestCode;
     private int sCheckFile;
+    private String sDreamFilePath;
     private int sDreamType;
     private int sDreamFavourite;
-    private String sDreamFilePath;
-    private String sDreamTitle;
-    private String sDreamText;
     private String sDreamDate;
 
 
@@ -129,15 +128,22 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
             }
         });
 
+        //If an existing entry gets edited, this block of code will be executed
         if (sRequestCode != -1 && sRequestCode == REQUEST_CODE_EXISTING_ENTRY) {
             btnOpenDialog.setVisibility(View.GONE);
             btnSave.setVisibility(View.GONE);
 
-            intent.getIntExtra(DreamDiaryActivity.EXTRA_ID, -1);
+            //get the values of the existing dream to override the old values
+            //TODO: welche werte bleiben immer gleich und können ohne prüfung überschrieben werden. welche werte können geändert werden ? AÄNDER: fav, type, title, text
+            sID = intent.getIntExtra(DreamDiaryActivity.EXTRA_ID, -1);
+            sDreamType = intent.getIntExtra(DreamDiaryActivity.EXTRA_TYPE, -1);
+            sDreamFavourite = intent.getIntExtra(DreamDiaryActivity.EXTRA_FAVOURITE,-1);
 
             sCheckFile = intent.getIntExtra(DreamDiaryActivity.EXTRA_CHECKFILE, 0);
             if (sCheckFile == AUDIO_FILE) {
-                replaceRecordingFragment(intent.getStringExtra(DreamDiaryActivity.EXTRA_AUDIO_PATH), 1, 1);
+                sDreamFilePath = intent.getStringExtra(DreamDiaryActivity.EXTRA_AUDIO_PATH);
+
+                replaceRecordingFragment(sDreamFilePath, 1, 1);
             } else {
                 fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction().hide(audioFragment).commit();
@@ -156,28 +162,36 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: handle the edit click
                 mEdtTitle.setEnabled(true);
                 mEdtText.setEnabled(true);
-
                 btnOpenDialog.setVisibility(View.VISIBLE);
                 btnSave.setVisibility(View.VISIBLE);
 
-                btnEdit.setVisibility(View.GONE);
+
+                //btnEdit.setVisibility(View.GONE);
+                btnEdit.setText("EXIT");
 
 
-                //TODO: if a file path exists, the old one should not be overriden so the audio file gets saved in place where the preceding file was stored
-//                Bundle bundle = new Bundle();
-//                bundle.putString(PlayingFragment.ARGUMENT_AUDIO_PATH, filePath);
-//                audioFragment.setArguments(bundle);
-//                transaction.replace(R.id.fragment_dream_dialog_audio_container, audioFragment).commit();
+                Bundle bundle = new Bundle();
 
-                audioFragment = new PlayingFragment();
+                //TODO: if there is an audio file. create a playing fragment. if there is no file create an RecordingFragment
+
+                if (sCheckFile == AUDIO_FILE){
+                    audioFragment = new PlayingFragment();
+
+                    bundle.putString(PlayingFragment.ARGUMENT_AUDIO_PATH, sDreamFilePath);
+                    audioFragment.setArguments(bundle);
+                }else {
+                    audioFragment = new RecordingFragment();
+                }
                 fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.fragment_dream_dialog_audio_container, audioFragment).commit();
 
-
-
+                if (editButtonClicked == false){
+                    editButtonClicked = true;
+                }else {
+                    finish();
+                }
 
             }
         });

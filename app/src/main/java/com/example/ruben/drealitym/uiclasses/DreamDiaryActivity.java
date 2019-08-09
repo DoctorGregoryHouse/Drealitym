@@ -33,6 +33,7 @@ public class DreamDiaryActivity extends AppCompatActivity /*implements DreamDiar
     public static final String EXTRA_TITLE = "com.example.ruben.drealitym.uiclasses.EXTRA_TITLE";
     public static final String EXTRA_TEXT = "com.example.ruben.drealitym.uiclasses.EXTRA_TEXT";
     public static final String EXTRA_AUDIO_PATH = "com.example.ruben.drealitym.uiclasses.EXTRA_AUDIO_PATH";
+    public static final String EXTRA_FAVOURITE = "com.example.ruben.drealitym.uiclasses.EXTRA_FAVOURITE";
 
     private DreamViewModel dreamViewModel;
 
@@ -76,6 +77,7 @@ public class DreamDiaryActivity extends AppCompatActivity /*implements DreamDiar
                         intent.putExtra(EXTRA_DATE,entry.getDate());
                         intent.putExtra(EXTRA_TITLE,entry.getTitle());
                         intent.putExtra(EXTRA_TEXT, entry.getText());
+                        intent.putExtra(EXTRA_FAVOURITE, entry.getFavourite());
 
                         if(entry.getCheckFile() == DreamDialogActivity.AUDIO_FILE ){
                             intent.putExtra(EXTRA_AUDIO_PATH,entry.getAudioPath());

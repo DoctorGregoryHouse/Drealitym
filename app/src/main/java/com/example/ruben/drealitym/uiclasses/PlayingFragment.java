@@ -52,7 +52,7 @@ public class PlayingFragment extends Fragment {
         if(getArguments() != null){
             mFilePath = getArguments().getString(ARGUMENT_AUDIO_PATH);
         }else{
-            Log.e(LOG_TAG,"getARguments = null, could not get string path");
+            Log.e(LOG_TAG,"getArguments = null, could not get string path");
 
         }
     }
