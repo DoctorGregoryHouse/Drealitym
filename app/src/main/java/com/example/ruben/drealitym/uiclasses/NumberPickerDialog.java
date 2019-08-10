@@ -14,6 +14,11 @@ import com.example.ruben.drealitym.R;
 
 public class NumberPickerDialog extends DialogFragment {
     private NumberPicker.OnValueChangeListener valueChangeListener;
+    private int initalValue;
+
+    public NumberPickerDialog(int initalValue){
+        this.initalValue = initalValue;
+    }
 
     @NonNull
     @Override
@@ -22,6 +27,7 @@ public class NumberPickerDialog extends DialogFragment {
         final NumberPicker numberPicker = new NumberPicker(getActivity());
         numberPicker.setMinValue(0);
         numberPicker.setMaxValue(2);
+        numberPicker.setValue(initalValue);
         numberPicker.setDisplayedValues(getResources().getStringArray(R.array.dialog_number_picker_strings));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -38,7 +44,7 @@ public class NumberPickerDialog extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //TODO: negative button logic
-                valueChangeListener.onValueChange(numberPicker, numberPicker.getValue(), numberPicker.getValue());
+                //valueChangeListener.onValueChange(numberPicker, numberPicker.getValue(), numberPicker.getValue());
             }
         });
         builder.setView(numberPicker);

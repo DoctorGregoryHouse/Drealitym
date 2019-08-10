@@ -27,13 +27,14 @@ import java.util.Date;
 public class DreamDialogActivity extends AppCompatActivity implements RecordingFragment.recordingInterface, NumberPicker.OnValueChangeListener {
 
     //TODO: add permission request
+    //TODO: add favourite flag function
+    //TODO: add function to remove audio files from dreams. The files have to be removed properly
 
     //CONSTANTS
     private static final String LOG_TAG = "DreamDialogActivity";
 
     public static final int AUDIO_FILE = 1;
     public static final int NO_AUDIO_FILE = 0;
-
 
     public static final int REQUEST_CODE_EXISTING_ENTRY = 10;
     public static final int REQUEST_CODE_NEW_ENTRY = 20;
@@ -48,20 +49,18 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
     //Attributes passed by intent
     private int sID;
     private int sRequestCode;
-    private int sCheckFile;
+    private int sDreamHasAudioFile;
     private String sDreamFilePath;
+    private String sDreamDate;
     private int sDreamType;
     private int sDreamFavourite;
-    private String sDreamDate;
-
-
     /*
     DreamClarity defines if its lucid pre-lucid or normal dream
     DreamDate adds the date of the dream saved
     DreamHasAudioFile determines whether there is an audio file or not, if there is not an audiofile there is
     also no @mDreamFilePath
      */
-    private int dDreamClarity = 0; //default value
+    private int dDreamType = 0; //default value
     private String dDreamDate;
     private int dDreamHasAudioFile;
     private String dDreamFilePath;
@@ -82,8 +81,9 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
         TODO: there should be a feedback to the user so he knows he chose a value, maybe when clicking the OK button in the NumberPickerDialog.class
          */
 
-        dDreamClarity = newVal;
-        Toast.makeText(this, "New Value: " + dDreamClarity, Toast.LENGTH_SHORT).show();
+        dDreamType = newVal;
+        sDreamType = newVal;
+        Toast.makeText(this, "New Value: " + dDreamType, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -117,7 +117,11 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveDream();
+                if(sRequestCode == REQUEST_CODE_NEW_ENTRY){
+                    saveNewDream();
+                }else if(sRequestCode == REQUEST_CODE_EXISTING_ENTRY){
+                    saveExistingDream();
+                }
             }
         });
         btnOpenDialog = findViewById(R.id.fragment_dream_dialog_btn_clarity_dialog);
@@ -135,12 +139,14 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
 
             //get the values of the existing dream to override the old values
             //TODO: welche werte bleiben immer gleich und können ohne prüfung überschrieben werden. welche werte können geändert werden ? AÄNDER: fav, type, title, text
+            //gleichbleibende werte:
             sID = intent.getIntExtra(DreamDiaryActivity.EXTRA_ID, -1);
-            sDreamType = intent.getIntExtra(DreamDiaryActivity.EXTRA_TYPE, -1);
+            sDreamType = intent.getIntExtra(DreamDiaryActivity.EXTRA_TYPE, 0);
             sDreamFavourite = intent.getIntExtra(DreamDiaryActivity.EXTRA_FAVOURITE,-1);
+            sDreamDate = intent.getStringExtra(DreamDiaryActivity.EXTRA_DATE);
 
-            sCheckFile = intent.getIntExtra(DreamDiaryActivity.EXTRA_CHECKFILE, 0);
-            if (sCheckFile == AUDIO_FILE) {
+            sDreamHasAudioFile = intent.getIntExtra(DreamDiaryActivity.EXTRA_CHECKFILE, 0);
+            if (sDreamHasAudioFile == AUDIO_FILE) {
                 sDreamFilePath = intent.getStringExtra(DreamDiaryActivity.EXTRA_AUDIO_PATH);
 
                 replaceRecordingFragment(sDreamFilePath, 1, 1);
@@ -176,7 +182,7 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
 
                 //TODO: if there is an audio file. create a playing fragment. if there is no file create an RecordingFragment
 
-                if (sCheckFile == AUDIO_FILE){
+                if (sDreamHasAudioFile == AUDIO_FILE){
                     audioFragment = new PlayingFragment();
 
                     bundle.putString(PlayingFragment.ARGUMENT_AUDIO_PATH, sDreamFilePath);
@@ -187,7 +193,7 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
                 fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.fragment_dream_dialog_audio_container, audioFragment).commit();
 
-                if (editButtonClicked == false){
+                if (!editButtonClicked){
                     editButtonClicked = true;
                 }else {
                     finish();
@@ -229,7 +235,7 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
         transaction.replace(R.id.fragment_dream_dialog_audio_container, audioFragment).commit();
     }
 
-    private void saveDream() {
+    private void saveNewDream() {
         String title = mEdtTitle.getText().toString();
         String text = mEdtText.getText().toString();
 
@@ -246,15 +252,54 @@ public class DreamDialogActivity extends AppCompatActivity implements RecordingF
 
         }
         //TODO: add int's for month year and day, change @param dDreamHasAudioFile to boolean
-        DreamEntry entry = new DreamEntry(dDreamClarity, dDreamHasAudioFile, dDreamDate, title, text, 0, dDreamFilePath);
+        DreamEntry entry = new DreamEntry(dDreamType, dDreamHasAudioFile, dDreamDate, title, text, 0, dDreamFilePath);
         viewModel.insert(entry);
         finish();
         //TODO: add animation to the "my diary" CardView on the main screen that shows the dream was added to the Diary. sth like a stroke lighting up in the action color
     }
 
 
+
+    private void saveExistingDream(){
+        String title = mEdtTitle.getText().toString();
+        String text = mEdtText.getText().toString();
+        String filePath = null; //if this remains null, then there will be no path saved
+
+        if (title.trim().isEmpty()) {
+            //TODO: STRING_VALUE
+            Toast.makeText(this, "Please enter a title!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(sDreamHasAudioFile == AUDIO_FILE){
+            filePath = sDreamFilePath;
+        }else{
+            if(dDreamFilePath == null){
+                sDreamHasAudioFile = NO_AUDIO_FILE;
+            }else {
+                sDreamHasAudioFile = AUDIO_FILE;
+                filePath = dDreamFilePath;
+            }
+        }
+        /*
+         sDreamType: gets set from intent, when changing value gets changed
+         sDreamAudioFile: see if/else construct above. sValues are from the Intent, dValues are local
+         sDreamDate: this value stays the same and gets extracted from the Intent
+         title + text come from editText
+         TODO: implement favourite logic
+         filePath is chosen in the if else construct
+         */
+        DreamEntry entry = new DreamEntry(sDreamType,sDreamHasAudioFile,sDreamDate,title,text,0,filePath);
+        entry.setId(sID);
+        viewModel.update(entry);
+        finish();
+
+
+    }
+
+
+
     public void showNumberPicker() {
-        NumberPickerDialog dialog = new NumberPickerDialog();
+        NumberPickerDialog dialog = new NumberPickerDialog(dDreamType);
         dialog.setValueChangeListener(this);
         dialog.show(getSupportFragmentManager(), "Clarity Picker");
     }

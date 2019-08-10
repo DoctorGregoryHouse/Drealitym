@@ -16,4 +16,6 @@ public class DreamDialogViewModel extends AndroidViewModel {
 
     public void insert(DreamEntry dreamEntry) {repository.insertDream(dreamEntry);}
 
+    public void update(DreamEntry dreamEntry) {repository.updateDream(dreamEntry);}
+
 }
