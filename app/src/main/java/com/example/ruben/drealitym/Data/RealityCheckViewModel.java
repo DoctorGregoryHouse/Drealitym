@@ -1,6 +1,7 @@
 package com.example.ruben.drealitym.Data;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -10,6 +11,8 @@ import java.util.List;
 
 public class RealityCheckViewModel extends AndroidViewModel {
 
+    private static final String LOG_TAG = "RealityCheckViewModel";
+
     private DrealitymRepository repository;
     private LiveData<List<RealityCheckEntry>> allRealityChecks;
 
@@ -18,6 +21,7 @@ public class RealityCheckViewModel extends AndroidViewModel {
 
         repository = new DrealitymRepository(application);
         allRealityChecks = repository.getAllRealityChecks();
+        Log.d(LOG_TAG,"swag");
     }
 
     public void insert(RealityCheckEntry realityCheckEntry){
@@ -32,6 +36,7 @@ public class RealityCheckViewModel extends AndroidViewModel {
     public void deleteAllRealityChecks(){
         repository.deleteAllRealityChecks();
     }
+
     public LiveData<List<RealityCheckEntry>> getAllRealityChecks(){
         return allRealityChecks;
     }

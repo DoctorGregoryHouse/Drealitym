@@ -19,11 +19,9 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     // Data for the ListView
     private List<String> exlvTitle;
-    List<RealityCheckEntry> realityCheckEntries;
+    private List<RealityCheckEntry> realityCheckEntries;
 
-
-
-    OnItemClickListener listener;
+    private OnItemClickListener listener;
 
     public CustomExpandableListAdapter(Context context, List<String> exlvTitle, List<String> exlvContent) {
         this.context = context;
@@ -32,7 +30,8 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getGroupCount() {
-        return exlvTitle.size();
+        //return 7;
+        return realityCheckEntries.size();
     }
 
     @Override
@@ -42,7 +41,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getGroup(int groupPosition) {
-        return exlvTitle.get(groupPosition);
+        return realityCheckEntries.get(groupPosition);
     }
 
     @Override
@@ -97,7 +96,13 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 if(listener != null && groupPosition != ExpandableListView.INVALID_POSITION)
-                listener.onItemClick(groupPosition, childPosition);
+
+                    if(childPosition != 0 && childPosition != 1){
+                        //start spinner to choose Interval
+
+                    }else {
+                        listener.onItemClick(groupPosition, childPosition);
+                    }
             }
         });
 
@@ -112,12 +117,13 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     public void setRealityCheckEntries(List<RealityCheckEntry> realityCheckEntries){
         this.realityCheckEntries = realityCheckEntries;
+        notifyDataSetChanged();
     }
 
 
     private String[] getDataStrings(int groupPosition){
 
-        RealityCheckEntry entry = realityCheckEntries.get(groupPosition );
+        RealityCheckEntry entry = realityCheckEntries.get(groupPosition);
 
         StringBuilder stringBuilder = new StringBuilder();
         int startHour = entry.getStartHour();

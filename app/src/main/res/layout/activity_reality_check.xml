@@ -13,7 +13,7 @@
         style="@style/DreamCardStyle">
 
         <ExpandableListView
-            android:id="@+id/activty_reality_check_ex_lv"
+            android:id="@+id/activity_reality_check_ex_lv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:dividerHeight="1dp"

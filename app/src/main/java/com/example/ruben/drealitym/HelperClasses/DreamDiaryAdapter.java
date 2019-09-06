@@ -47,7 +47,7 @@ public class DreamDiaryAdapter extends RecyclerView.Adapter<DreamDiaryAdapter.Dr
     public void setDreams(List<DreamEntry> Dreams) {
         this.Dreams = Dreams;
         notifyDataSetChanged();
-        //TODO: update @method notifyDataSetChanged();
+        //TODO: update method notifyDataSetChanged();
     }
 
 

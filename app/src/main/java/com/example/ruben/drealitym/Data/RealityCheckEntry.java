@@ -10,7 +10,6 @@ public class RealityCheckEntry {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    private int day;
     private int startHour;
     private int startMinute;
     private int stopHour;
@@ -18,8 +17,7 @@ public class RealityCheckEntry {
     private int interval;
     private int notification;
 
-    public RealityCheckEntry(int day, int startHour, int startMinute, int stopHour, int stopMinute, int interval, int notification) {
-        this.day = day;
+    public RealityCheckEntry(int startHour, int startMinute, int stopHour, int stopMinute, int interval, int notification) {
         this.startHour = startHour;
         this.startMinute = startMinute;
         this.stopHour = stopHour;
@@ -40,16 +38,13 @@ public class RealityCheckEntry {
     public int getStartMinute(){
         return startMinute;
     }
+
     public int getStopMinute(){
         return stopMinute;
     }
 
     public int getStopHour() {
         return stopHour;
-    }
-
-    public int getDay() {
-        return day;
     }
 
     public int getInterval() {

@@ -9,7 +9,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {DreamEntry.class, RealityCheckEntry.class /*komma here ? */}, version = 3, exportSchema = false)
+@Database(entities = {DreamEntry.class, RealityCheckEntry.class /*komma here ? */}, version = 5, exportSchema = false)
 public abstract class DrealitymDatabase extends RoomDatabase {
 
     //DrealitymDatabase;
@@ -20,7 +20,7 @@ public abstract class DrealitymDatabase extends RoomDatabase {
     public abstract RealityCheckDao realityCheckDao();
 
     //synchronized means that only one thread at a time can access this method
-    public static synchronized DrealitymDatabase getInstance(Context context){
+    static synchronized DrealitymDatabase getInstance(Context context){
         if(instance == null){
             instance = Room.databaseBuilder(context.getApplicationContext(),
                     DrealitymDatabase.class, "dream_database")
@@ -52,7 +52,7 @@ public abstract class DrealitymDatabase extends RoomDatabase {
         private DreamDao mDreamDao;
         private RealityCheckDao mRealityCheckDao;
 
-        public PopulateDbAsyncTask(DrealitymDatabase db){
+        PopulateDbAsyncTask(DrealitymDatabase db){
             mDreamDao = db.dreamDao();
             mRealityCheckDao = db.realityCheckDao();
         }
@@ -62,13 +62,13 @@ public abstract class DrealitymDatabase extends RoomDatabase {
 
             //TODO: No need for the first row in the db, crate enum or HashMap or StringArray ( ? ) for the interval to preset certain values
             //TODO: At the applications first start, this entry should be created for every user instead of this dummy data
-            mRealityCheckDao.insert(new RealityCheckEntry(1,6,30,18,45,2,2));
-            mRealityCheckDao.insert(new RealityCheckEntry(2,6,30,18,45,2,2));
-            mRealityCheckDao.insert(new RealityCheckEntry(3,6,30,18,45,2,2));
-            mRealityCheckDao.insert(new RealityCheckEntry(4,6,30,18,45,2,2));
-            mRealityCheckDao.insert(new RealityCheckEntry(5,6,30,18,45,2,2));
-            mRealityCheckDao.insert(new RealityCheckEntry(6,10,30,22,0,8,2));
-            mRealityCheckDao.insert(new RealityCheckEntry(7,10,30,22,0,4,2));
+            mRealityCheckDao.insert(new RealityCheckEntry(1,30,18,45,2,2));
+            mRealityCheckDao.insert(new RealityCheckEntry(2,30,18,45,2,2));
+            mRealityCheckDao.insert(new RealityCheckEntry(3,30,18,45,2,2));
+            mRealityCheckDao.insert(new RealityCheckEntry(4,30,18,45,2,2));
+            mRealityCheckDao.insert(new RealityCheckEntry(5,30,18,45,2,2));
+            mRealityCheckDao.insert(new RealityCheckEntry(6,30,22,0,8,2));
+            mRealityCheckDao.insert(new RealityCheckEntry(7,30,22,0,4,2));
 
             return null;
         }
