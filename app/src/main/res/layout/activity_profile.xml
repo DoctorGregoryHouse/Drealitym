@@ -17,7 +17,7 @@
 
 
             <fragment
-                android:name="com.example.ruben.drealitym.uiclasses.ProfileUserFragment"
+                android:name="com.example.ruben.drealitym.UiClasses.ProfileUserFragment"
                 android:id="@+id/profile_fragment"
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="8dp"

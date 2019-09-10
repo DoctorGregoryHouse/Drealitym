@@ -7,20 +7,20 @@
 
     <application
 
-        android:name=".reminderclasses.AppBlueprint"
+        android:name=".Notifications.DrealitymApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".uiclasses.DreamDiaryActivity"></activity>
-        <activity android:name=".uiclasses.SettingsActivity"></activity>
-        <activity android:name=".uiclasses.DreamDialogActivity"></activity>
-        <activity android:name=".uiclasses.RealityCheckActivity"></activity>
-
-
-        <activity android:name=".uiclasses.MainActivity">
+        <service android:name=".Notifications.ScheduleNotificationsService"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
+        <activity android:name=".UiClasses.DreamDiaryActivity"></activity>
+        <activity android:name=".UiClasses.SettingsActivity"></activity>
+        <activity android:name=".UiClasses.DreamDialogActivity"></activity>
+        <activity android:name=".UiClasses.RealityCheckActivity"></activity>
+        <activity android:name=".UiClasses.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".reminderclasses.AlertReceiver"/> <!--TODO:ist dieser eintrag richtig plaziert ? -->
+        <receiver android:name=".Notifications.AlertReceiver"/> <!--TODO:ist dieser eintrag richtig plaziert ? -->
     </application>
 
 

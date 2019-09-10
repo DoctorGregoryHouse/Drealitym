@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_shape_lila"
     android:orientation="horizontal"
-    tools:context=".uiclasses.MainActivity">
+    tools:context=".UiClasses.MainActivity">
 
     <TextView
         android:id="@+id/activity_main_heading_text_view"

@@ -1,4 +1,4 @@
-package com.example.ruben.drealitym.uiclasses;
+package com.example.ruben.drealitym.UiClasses;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;

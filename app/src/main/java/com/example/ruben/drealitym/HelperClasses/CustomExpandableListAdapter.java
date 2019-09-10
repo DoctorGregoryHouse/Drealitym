@@ -23,7 +23,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     private OnItemClickListener listener;
 
-    public CustomExpandableListAdapter(Context context, List<String> exlvTitle, List<String> exlvContent) {
+    public CustomExpandableListAdapter(Context context, List<String> exlvTitle) {
         this.context = context;
         this.exlvTitle = exlvTitle;
     }
@@ -99,6 +99,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
                     if(childPosition != 0 && childPosition != 1){
                         //start spinner to choose Interval
+                        listener.onItemClick(groupPosition,childPosition, true);
 
                     }else {
                         listener.onItemClick(groupPosition, childPosition);
@@ -173,6 +174,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     //Interface implemented in the RealityCheckActivity to handle the click on the childItem
     public interface OnItemClickListener {
         void onItemClick(int groupPosition, int childPosition);
+        void onItemClick(int groupPosition, int childPosition, boolean clickedIntervall);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener){

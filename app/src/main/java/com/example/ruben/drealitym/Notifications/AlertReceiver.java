@@ -1,4 +1,4 @@
-package com.example.ruben.drealitym.reminderclasses;
+package com.example.ruben.drealitym.Notifications;
 
 
 import android.app.Notification;
@@ -12,20 +12,20 @@ import android.widget.Toast;
 
 import com.example.ruben.drealitym.R;
 
-import static com.example.ruben.drealitym.reminderclasses.AppBlueprint.CHANNEL_1_ID;
-import static com.example.ruben.drealitym.reminderclasses.AppBlueprint.CHANNEL_2_ID;
+import static com.example.ruben.drealitym.Notifications.DrealitymApplication.CHANNEL_1_ID;
+import static com.example.ruben.drealitym.Notifications.DrealitymApplication.CHANNEL_2_ID;
 
 public class AlertReceiver extends BroadcastReceiver {
 
     NotificationManagerCompat notifyManager;
-    Context c;
+    Context context;
 
     @Override
     public void onReceive(Context context, Intent intent) {
 
         Toast.makeText(context, "onReceive called, notification should popup", Toast.LENGTH_LONG).show();
 
-        c = context;
+        this.context = context;
         notifyManager = NotificationManagerCompat.from(context); // HAVE TO use NotificationManagerCompat instead of NotificationManger for backwards compatibility
 
         sendCheckNotification();
@@ -38,7 +38,7 @@ public class AlertReceiver extends BroadcastReceiver {
 
 
         //builds the notification
-        Notification notification  = new NotificationCompat.Builder(c, CHANNEL_1_ID)
+        Notification notification  = new NotificationCompat.Builder(context, CHANNEL_1_ID)
                 .setContentTitle("Notification Title")
                 .setContentText("Notification Text")
                 .setSmallIcon(R.drawable.ic_notify)
@@ -58,7 +58,7 @@ public class AlertReceiver extends BroadcastReceiver {
     public void sendReadNotification(){
 
         //builds the notification
-        Notification notification  = new NotificationCompat.Builder(c, CHANNEL_2_ID)
+        Notification notification  = new NotificationCompat.Builder(context, CHANNEL_2_ID)
                 .setContentTitle("Notification Title(C2)")
                 .setContentText("Notification Text(C2)")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)

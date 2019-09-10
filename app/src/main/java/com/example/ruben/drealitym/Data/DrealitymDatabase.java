@@ -48,6 +48,7 @@ public abstract class DrealitymDatabase extends RoomDatabase {
 
         }
     };
+
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void>{
         private DreamDao mDreamDao;
         private RealityCheckDao mRealityCheckDao;

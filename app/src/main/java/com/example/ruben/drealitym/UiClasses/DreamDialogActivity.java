@@ -1,4 +1,4 @@
-package com.example.ruben.drealitym.uiclasses;
+package com.example.ruben.drealitym.UiClasses;
 
 import android.content.Intent;
 import android.os.Bundle;
