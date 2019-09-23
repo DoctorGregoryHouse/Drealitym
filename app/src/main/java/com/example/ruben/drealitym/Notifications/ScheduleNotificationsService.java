@@ -7,6 +7,8 @@ import android.app.job.JobService;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.ruben.drealitym.R;
+
 import static com.example.ruben.drealitym.Notifications.DrealitymApplication.CHANNEL_1_ID;
 
 public class ScheduleNotificationsService extends JobService {
@@ -26,6 +28,7 @@ public class ScheduleNotificationsService extends JobService {
         Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_1_ID)
                 .setContentTitle("Title")
                 .setContentText("Text")
+                .setSmallIcon(R.drawable.ic_notify)
                 .setPriority(NotificationCompat.DEFAULT_ALL)
                 .build();
 

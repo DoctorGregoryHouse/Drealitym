@@ -1,14 +1,18 @@
 package com.example.ruben.drealitym.HelperClasses;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.ruben.drealitym.Data.RealityCheckEntry;
+import com.example.ruben.drealitym.Data.RealityCheckViewModel;
 import com.example.ruben.drealitym.R;
 
 import java.util.List;
@@ -17,9 +21,16 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
 
+    //CONSTANTS
+    private static final String LOG_TAG = "CustExpListAdapter";
+    public static final int GET_NOTIFIED = 1;
+    public static final int DONT_GET_NOTIFIED = 2;
+
+
     // Data for the ListView
     private List<String> exlvTitle;
     private List<RealityCheckEntry> realityCheckEntries;
+    private RealityCheckViewModel viewModel;
 
     private OnItemClickListener listener;
 
@@ -65,7 +76,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+    public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 
         String groupTitle = exlvTitle.get(groupPosition);
         if (convertView == null){
@@ -74,6 +85,28 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         }
         TextView tvTitle = convertView.findViewById(R.id.item_reality_check_title);
         tvTitle.setText(groupTitle);
+
+        Switch enableSwitch = (Switch) convertView.findViewById(R.id.reality_check_item_switch);
+        enableSwitch.setClickable(false);
+        final RealityCheckEntry mEntry = realityCheckEntries.get(groupPosition);
+
+
+        if (mEntry.getNotification() == GET_NOTIFIED) {
+            enableSwitch.setChecked(false);
+        }else{
+            enableSwitch.setChecked(true);
+        }
+
+        enableSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(listener != null){
+                    listener.onItemSwitchClick(groupPosition, mEntry.getNotification());
+                }
+                Log.d(LOG_TAG, "GroupPosition: " + groupPosition + " isChecked: " + mEntry.getNotification());
+
+            }
+        });
         return convertView;
     }
 
@@ -174,7 +207,8 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     //Interface implemented in the RealityCheckActivity to handle the click on the childItem
     public interface OnItemClickListener {
         void onItemClick(int groupPosition, int childPosition);
-        void onItemClick(int groupPosition, int childPosition, boolean clickedIntervall);
+        void onItemClick(int groupPosition, int childPosition, boolean clickedInterval);
+        void onItemSwitchClick(int groupPosition, int getNotified); //handle click on the switch
     }
 
     public void setOnItemClickListener(OnItemClickListener listener){

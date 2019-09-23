@@ -26,6 +26,7 @@
         android:layout_height="match_parent" />
 
     <Switch
+        android:id="@+id/reality_check_item_switch"
         android:focusable="false"
         android:layout_gravity="center"
         android:layout_marginEnd="16dp"
