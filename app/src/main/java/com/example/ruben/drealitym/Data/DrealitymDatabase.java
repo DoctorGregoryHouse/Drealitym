@@ -20,7 +20,7 @@ public abstract class DrealitymDatabase extends RoomDatabase {
     public abstract RealityCheckDao realityCheckDao();
 
     //synchronized means that only one thread at a time can access this method
-    static synchronized DrealitymDatabase getInstance(Context context){
+    public static synchronized DrealitymDatabase getInstance(Context context){
         if(instance == null){
             instance = Room.databaseBuilder(context.getApplicationContext(),
                     DrealitymDatabase.class, "dream_database")

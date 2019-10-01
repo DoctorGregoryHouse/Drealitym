@@ -65,7 +65,7 @@ public class RealityCheckActivity extends AppCompatActivity implements TimePicke
         sendTestNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NotificationScheduler ns = new NotificationScheduler();
+                NotificationScheduler ns = new NotificationScheduler(getApplicationContext());
                 ns.scheduleNotification();
             }
         });
@@ -209,7 +209,7 @@ public class RealityCheckActivity extends AppCompatActivity implements TimePicke
 
     //algorithm for scheduling the next notification
     //region
-//    public void scheduleNotification() {
+//    public void scheduleJob() {
 //        int time = calculateScheduleTime();
 //        //TODO: Does this Toast show when the user does not but the algorithm schedules an alarm ?
 //        if (time == -1){
