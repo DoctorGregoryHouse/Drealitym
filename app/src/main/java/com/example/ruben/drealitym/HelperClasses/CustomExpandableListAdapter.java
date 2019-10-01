@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.ruben.drealitym.Data.RealityCheckEntry;
 import com.example.ruben.drealitym.Data.RealityCheckViewModel;
 import com.example.ruben.drealitym.R;
+import com.example.ruben.drealitym.UiClasses.RealityCheckActivity;
 
 import java.util.List;
 
@@ -23,8 +24,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     //CONSTANTS
     private static final String LOG_TAG = "CustExpListAdapter";
-    public static final int GET_NOTIFIED = 1;
-    public static final int DONT_GET_NOTIFIED = 2;
+
 
 
     // Data for the ListView
@@ -91,16 +91,21 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         final RealityCheckEntry mEntry = realityCheckEntries.get(groupPosition);
 
 
-        if (mEntry.getNotification() == GET_NOTIFIED) {
-            enableSwitch.setChecked(false);
-        }else{
+        if (mEntry.getNotification() == RealityCheckActivity.GET_NOTIFIED) {
             enableSwitch.setChecked(true);
+        }else{
+            enableSwitch.setChecked(false);
         }
 
         enableSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(listener != null){
+                     /*
+                     Best practice would be to use an onCheckChangeListener, but when using it the LiveDataObserver triggers every time it is changed, independent whether
+                     the user does changes it or it gets changed programmatically. This ends up in a loop
+                     A solution approach would be Android Data Binding
+                      */
                     listener.onItemSwitchClick(groupPosition, mEntry.getNotification());
                 }
                 Log.d(LOG_TAG, "GroupPosition: " + groupPosition + " isChecked: " + mEntry.getNotification());

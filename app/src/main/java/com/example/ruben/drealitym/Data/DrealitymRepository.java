@@ -14,6 +14,7 @@ public class DrealitymRepository {
 
     private LiveData<List<DreamEntry>> allDreams;
     private LiveData<List<RealityCheckEntry>> allRealityChecks;
+    private List<RealityCheckEntry> staticRealityCheckList;
 
     //
     public DrealitymRepository(Application application){ //application is a subclass of context
@@ -22,6 +23,7 @@ public class DrealitymRepository {
         //The statements below call the abstract method of the Database class, usual its not possible to call abstract classes, but room creates the necessary code to call the class
         dreamDao = database.dreamDao();
         allDreams =  dreamDao.getAllDreams();
+        //staticRealityCheckList = realityCheckDao.getStaticDreamList();
 
         //Statements for the RealityChecks
         realityCheckDao = database.realityCheckDao();
@@ -47,6 +49,7 @@ public class DrealitymRepository {
     public LiveData<List<DreamEntry>> getAllDreams(){
         return allDreams;
     }
+
 
     private static class InsertDreamAsyncTask extends AsyncTask<DreamEntry, Void, Void>{
         private DreamDao dreamDao;
@@ -120,6 +123,7 @@ public class DrealitymRepository {
         new DeleteAllRealityChecksTask(realityCheckDao).execute();
     }
     public LiveData<List<RealityCheckEntry>> getAllRealityChecks(){return  allRealityChecks;}
+    public List<RealityCheckEntry> getStaticRealityCheckList(){return staticRealityCheckList;}
 
     //AsyncTasks for the RealityCheck database operations
     //region

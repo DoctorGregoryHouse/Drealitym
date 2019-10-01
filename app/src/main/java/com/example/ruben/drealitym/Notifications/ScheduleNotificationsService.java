@@ -8,6 +8,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.ruben.drealitym.R;
+import com.example.ruben.drealitym.UiClasses.RealityCheckActivity;
 
 import static com.example.ruben.drealitym.Notifications.DrealitymApplication.CHANNEL_1_ID;
 
@@ -39,7 +40,8 @@ public class ScheduleNotificationsService extends JobService {
 
     @Override
     public boolean onStopJob(JobParameters jobParameters) {
-        //schedule the next notification
+        NotificationScheduler ns = new NotificationScheduler();
+        ns.scheduleNotification();
         return false;
     }
 }

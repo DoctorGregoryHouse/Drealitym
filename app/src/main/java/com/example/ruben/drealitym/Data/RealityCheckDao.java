@@ -27,4 +27,7 @@ public interface RealityCheckDao {
 
     @Query("SELECT * FROM reality_check_table")
     LiveData<List<RealityCheckEntry>> getAllRealityChecks();
+
+    @Query("SELECT * FROM reality_check_table")
+    List<RealityCheckEntry> getStaticDreamList();
 }

@@ -15,12 +15,14 @@ public class RealityCheckViewModel extends AndroidViewModel {
 
     private DrealitymRepository repository;
     private LiveData<List<RealityCheckEntry>> allRealityChecks;
+    private List<RealityCheckEntry> staticRealityCheckList;
 
     public RealityCheckViewModel(@NonNull Application application){
         super(application);
 
         repository = new DrealitymRepository(application);
         allRealityChecks = repository.getAllRealityChecks();
+        staticRealityCheckList = repository.getStaticRealityCheckList();
         Log.d(LOG_TAG,"swag");
     }
 
@@ -41,7 +43,6 @@ public class RealityCheckViewModel extends AndroidViewModel {
         return allRealityChecks;
     }
 
-
-
+    public List<RealityCheckEntry> getStaticRealityCheckList() {return staticRealityCheckList; }
 
 }
