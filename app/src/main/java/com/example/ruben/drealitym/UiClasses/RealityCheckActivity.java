@@ -2,6 +2,9 @@ package com.example.ruben.drealitym.UiClasses;
 
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +26,7 @@ import com.example.ruben.drealitym.Data.RealityCheckViewModel;
 import com.example.ruben.drealitym.HelperClasses.CustomExpandableListAdapter;
 import com.example.ruben.drealitym.HelperClasses.TimePickerFragment;
 import com.example.ruben.drealitym.Notifications.NotificationScheduler;
+import com.example.ruben.drealitym.Notifications.ScheduleNotificationsService;
 import com.example.ruben.drealitym.R;
 
 import java.util.ArrayList;
@@ -31,7 +35,7 @@ import java.util.List;
 
 public class RealityCheckActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
 
-    private static final String LOG_TAG = "RealityCheckActivity";
+    private static final String TAG = "RealityCheckActivity";
     public static final int GET_NOTIFIED = 1;
     public static final int DONT_GET_NOTIFIED = 2;
 
@@ -52,7 +56,7 @@ public class RealityCheckActivity extends AppCompatActivity implements TimePicke
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reality_check);
 
-        Log.d(LOG_TAG, "OnCreate: called...");
+        Log.d(TAG, "OnCreate: called...");
         // Hide ActionBar
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
@@ -65,8 +69,23 @@ public class RealityCheckActivity extends AppCompatActivity implements TimePicke
         sendTestNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NotificationScheduler ns = new NotificationScheduler(getApplicationContext());
+                NotificationScheduler ns = new NotificationScheduler(getBaseContext());
                 ns.scheduleNotification();
+                Toast.makeText(RealityCheckActivity.this, "Send Testnotification", Toast.LENGTH_SHORT).show();
+
+                ComponentName componentName = new ComponentName(getApplication(), ScheduleNotificationsService.class);
+                JobInfo info = new JobInfo.Builder(123, componentName)
+                        .setPersisted(true) //Job is not lost when rebooting the device
+                        .setMinimumLatency(1000 * 3)
+                        .build();
+                JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+                int resultcode = scheduler.schedule(info);
+                if(resultcode == JobScheduler.RESULT_SUCCESS) {
+                    Log.d(TAG, "onClick: Job scheduled");
+                }else{
+                    Log.d(TAG, "onClick: Job scheduleing failed");
+                }
+
             }
         });
 
@@ -76,7 +95,7 @@ public class RealityCheckActivity extends AppCompatActivity implements TimePicke
         viewModel.getAllRealityChecks().observe(this, new Observer<List<RealityCheckEntry>>() {
             @Override
             public void onChanged(final List<RealityCheckEntry> realityCheckEntries) {
-                Log.d(LOG_TAG, "onChanged called...");
+                Log.d(TAG, "onChanged called...");
                 RealityCheckActivity.this.realityCheckEntries = realityCheckEntries;
                 listAdapter.setRealityCheckEntries(realityCheckEntries);
                 listview.setAdapter(listAdapter);
@@ -153,7 +172,7 @@ public class RealityCheckActivity extends AppCompatActivity implements TimePicke
                             newEntry.setId(groupPosition + 1);
                         }
                         viewModel.update(newEntry);
-                        Log.d(LOG_TAG, "GroupPosition: " + groupPosition + " isChecked: " + newEntry.getNotification());
+                        Log.d(TAG, "GroupPosition: " + groupPosition + " isChecked: " + newEntry.getNotification());
                     }
                 });
 
@@ -187,7 +206,7 @@ public class RealityCheckActivity extends AppCompatActivity implements TimePicke
             newEntry = new RealityCheckEntry(oldEntry.getStartHour(), oldEntry.getStartMinute(), hourOfDay, minute, oldEntry.getInterval(), oldEntry.getNotification());
             newEntry.setId(currentGroupPosition + 1);
         } else if (currentChildPosition == -1) {
-            Log.e(LOG_TAG, "invalid childposition : -1");
+            Log.e(TAG, "invalid childposition : -1");
         }
 
         viewModel.update(newEntry);
@@ -216,14 +235,14 @@ public class RealityCheckActivity extends AppCompatActivity implements TimePicke
 //            Toast.makeText(this, "You should add some time", Toast.LENGTH_SHORT).show();
 //            return;
 //        }
-//        Log.d(LOG_TAG,"Calculated time for next notificaiton: " + time);
+//        Log.d(TAG,"Calculated time for next notificaiton: " + time);
 //        JobScheduler mJobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
 //        JobInfo.Builder builder = new JobInfo.Builder(1, new ComponentName(getPackageName(), ScheduleNotificationsService.class.getName()));
 //        builder.setMinimumLatency(time * 60 * 1000);
 //
 //        if (mJobScheduler.schedule(builder.build()) <= 0) {
 //            //If something goes wrong
-//            Log.d(LOG_TAG, "Jobscheduler could not schedule notifciation");
+//            Log.d(TAG, "Jobscheduler could not schedule notifciation");
 //        }
 //    }
 //
@@ -290,7 +309,7 @@ public class RealityCheckActivity extends AppCompatActivity implements TimePicke
 //                check = false;
 //            }
 //        }
-//        Log.d(LOG_TAG,"Returned intervals for day: " + day +" , first interval: " + intervals.get(0));
+//        Log.d(TAG,"Returned intervals for day: " + day +" , first interval: " + intervals.get(0));
 //        return intervals;
 //    }
     //endregion

@@ -68,7 +68,8 @@ public class NotificationScheduler {
             }
             JobScheduler mJobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
             JobInfo.Builder builder = new JobInfo.Builder(1, new ComponentName(context.getPackageName(), ScheduleNotificationsService.class.getName()));
-            builder.setMinimumLatency(time * 60 * 1000);
+            //builder.setMinimumLatency(time * 60 * 1000);
+            builder.setMinimumLatency(19);
 
             if (mJobScheduler.schedule(builder.build()) <= 0) {
                 //If something goes wrong
