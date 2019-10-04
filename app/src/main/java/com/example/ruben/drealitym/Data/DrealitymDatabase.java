@@ -9,7 +9,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {DreamEntry.class, RealityCheckEntry.class /*komma here ? */}, version = 6, exportSchema = false)
+@Database(entities = {DreamEntry.class, RealityCheckEntry.class /*komma here ? */}, version = 7, exportSchema = false)
 public abstract class DrealitymDatabase extends RoomDatabase {
 
     //DrealitymDatabase;
@@ -59,7 +59,6 @@ public abstract class DrealitymDatabase extends RoomDatabase {
         }
         @Override
         protected Void doInBackground(Void... voids) {
-            mDreamDao.insert(new DreamEntry(1,1,"100","DummyDreamTitle","DummyDreamText", 1, "//dummy/path/audio"));
 
             //TODO: No need for the first row in the db, crate enum or HashMap or StringArray ( ? ) for the interval to preset certain values
             //TODO: At the applications first start, this entry should be created for every user instead of this dummy data
@@ -71,11 +70,13 @@ public abstract class DrealitymDatabase extends RoomDatabase {
             mRealityCheckDao.insert(new RealityCheckEntry(6,30,22,0,8,2));
             mRealityCheckDao.insert(new RealityCheckEntry(7,30,22,0,4,2));
 
+            for (int i = 1; i < 22 ; i++) {
+                mDreamDao.insert(new DreamEntry(1,1,"100","DummyDream" + i,"DummyDreamText", 1, "//dummy/path/audio"));
+            }
+
+
             return null;
         }
     }
-
-
-
 
 }

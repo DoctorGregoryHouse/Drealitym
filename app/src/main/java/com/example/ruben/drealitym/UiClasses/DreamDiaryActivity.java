@@ -1,9 +1,16 @@
 package com.example.ruben.drealitym.UiClasses;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.View;
+import android.widget.SearchView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.ruben.drealitym.Data.DreamEntry;
 import com.example.ruben.drealitym.Data.DreamViewModel;
@@ -37,6 +44,9 @@ public class DreamDiaryActivity extends AppCompatActivity /*implements DreamDiar
     private DreamViewModel dreamViewModel;
 
 
+
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +57,10 @@ public class DreamDiaryActivity extends AppCompatActivity /*implements DreamDiar
         if (getSupportActionBar() != null){
             getSupportActionBar().hide();
         }
+
+        SearchView searchView = findViewById(R.id.dream_diary_searchView);
+
+
 
 
         RecyclerView recyclerView = findViewById(R.id.activity_dream_diary_recycler_view);
