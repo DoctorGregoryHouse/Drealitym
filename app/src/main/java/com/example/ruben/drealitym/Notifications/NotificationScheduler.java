@@ -77,7 +77,7 @@ public class NotificationScheduler {
 
 
             ComponentName componentName = new ComponentName(context, ScheduleNotificationsService.class);
-            JobInfo info = new JobInfo.Builder(123, componentName)
+            JobInfo info = new JobInfo.Builder(1, componentName)
                     .setPersisted(true) //Job is not lost when rebooting the device
                     .setMinimumLatency(time * 60 * 1000)
                     .build();

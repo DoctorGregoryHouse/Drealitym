@@ -30,26 +30,32 @@ public class DrealitymRepository {
         allRealityChecks = realityCheckDao.getAllRealityChecks();
     }
 
+    public LiveData<List<DreamEntry>>getQueriedDreams(String query){
+        return dreamDao.getQueriedList(query);
+    }
+
     public void insertDream(DreamEntry dreamEntry){
         new InsertDreamAsyncTask(dreamDao).execute(dreamEntry);
     }
+
     public void updateDream(DreamEntry dreamEntry){
         new UpdateDreamAsyncTask(dreamDao).execute(dreamEntry);
-
     }
+
     public void deleteDream(DreamEntry dreamEntry){
         new DeleteDreamAsyncTask(dreamDao).execute(dreamEntry);
     }
+
     public void deleteAllDreams(){
         new DeleteAllDreamsAsyncTask(dreamDao).execute();
     }
 
-    //AsyncTasks for the DreamDatabase operations
-    //region
     public LiveData<List<DreamEntry>> getAllDreams(){
         return allDreams;
     }
 
+    //AsyncTasks for the DreamDatabase operations
+    //region
 
     private static class InsertDreamAsyncTask extends AsyncTask<DreamEntry, Void, Void>{
         private DreamDao dreamDao;

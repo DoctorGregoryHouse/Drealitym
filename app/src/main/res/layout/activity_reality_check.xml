@@ -12,6 +12,30 @@
         android:layout_marginEnd="8dp"
         style="@style/DreamCardStyle">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enable Notifications for Realitychecks"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            android:layout_gravity="center"/>
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"/>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        style="@style/DreamCardStyle">
+
         <ExpandableListView
             android:id="@+id/activity_reality_check_ex_lv"
             android:layout_width="match_parent"

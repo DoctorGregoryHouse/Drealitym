@@ -1,17 +1,16 @@
 package com.example.ruben.drealitym.UiClasses;
 
-import android.content.Context;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
-import android.widget.SearchView;
+import android.widget.Button;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
+import com.example.ruben.drealitym.Data.DrealitymRepository;
 import com.example.ruben.drealitym.Data.DreamEntry;
 import com.example.ruben.drealitym.Data.DreamViewModel;
 import com.example.ruben.drealitym.HelperClasses.DreamDiaryAdapter;
@@ -21,6 +20,7 @@ import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -42,9 +42,9 @@ public class DreamDiaryActivity extends AppCompatActivity /*implements DreamDiar
     public static final String EXTRA_FAVOURITE = "com.example.ruben.drealitym.uiclasses.EXTRA_FAVOURITE";
 
     private DreamViewModel dreamViewModel;
-
-
-
+    DrealitymRepository repository;
+    RecyclerView recyclerView;
+    DreamDiaryAdapter adapter;
 
 
     @Override
@@ -59,21 +59,23 @@ public class DreamDiaryActivity extends AppCompatActivity /*implements DreamDiar
         }
 
         SearchView searchView = findViewById(R.id.dream_diary_searchView);
+        searchView.setSubmitButtonEnabled(true);
+        searchView.setOnQueryTextListener(onQueryTextListener);
 
 
+        repository = new DrealitymRepository(getApplication());
 
-
-        RecyclerView recyclerView = findViewById(R.id.activity_dream_diary_recycler_view);
+        recyclerView = findViewById(R.id.activity_dream_diary_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true); //if you know its size won't change, change this to true because it makes the view more efficient
 
-        final DreamDiaryAdapter adapter = new DreamDiaryAdapter();
+        adapter = new DreamDiaryAdapter();
         recyclerView.setAdapter(adapter);
 
         dreamViewModel = ViewModelProviders.of(this).get(DreamViewModel.class);
         dreamViewModel.getAllDreams().observe(this, new Observer<List<DreamEntry>>() {
             @Override
-            public void onChanged(List<DreamEntry> dreamEntries) {
+            public void onChanged(final List<DreamEntry> dreamEntries) {
                 //here update the recyclerview
                 adapter.setDreams(dreamEntries);
                 adapter.setOnItemClickListener(new DreamDiaryAdapter.OnItemClickListener() {
@@ -99,12 +101,76 @@ public class DreamDiaryActivity extends AppCompatActivity /*implements DreamDiar
 
 
                     }
+
+                    @Override
+                    public void onItemLongClick(final DreamEntry entry) {
+                        Toast.makeText(DreamDiaryActivity.this, "LongClick on: " + entry.getId() , Toast.LENGTH_SHORT).show();
+
+                        final Dialog dialog = new Dialog(DreamDiaryActivity.this);
+                        dialog.setContentView(R.layout.dialog_custom);
+                        dialog.setTitle("Title");
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                        Button dialogAcceptButton = (Button) dialog.findViewById(R.id.custom_dialog_accept);
+                        Button dialogDismissButton = (Button) dialog.findViewById(R.id.custom_dialog_dismiss);
+                        dialogDismissButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dialog.dismiss();
+
+                            }
+                        });
+                        dialogAcceptButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                //Delete the clicked entry
+                                dreamViewModel.delete(entry);
+                                dialog.dismiss();
+                                Toast.makeText(DreamDiaryActivity.this, "Sucessfully deleted !", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        dialog.show();
+
+                    }
                 });
-                Toast.makeText(DreamDiaryActivity.this, "onChanged", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
 
+    private SearchView.OnQueryTextListener onQueryTextListener =
+            new SearchView.OnQueryTextListener() {
 
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    //get the values from db
+                    getDreamFromDb(query);
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String query) {
+                    getDreamFromDb(query);
+                    return true;
+                }
+
+                private void getDreamFromDb(String searchText){
+                    searchText = "%"+searchText+"%";
+                    repository.getQueriedDreams(searchText).observe(DreamDiaryActivity.this, new Observer<List<DreamEntry>>() {
+                        @Override
+                        public void onChanged(List<DreamEntry> dreamEntries) {
+                            if (dreamEntries==null){
+                                return;
+                            }
+                            DreamDiaryAdapter adapter = new DreamDiaryAdapter(dreamEntries);
+                            recyclerView.setAdapter(adapter);
+
+                            //https://www.zoftino.com/android-search-functionality-using-searchview-and-room
+                        }
+                    });
+
+
+                }
+            };
 }

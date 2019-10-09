@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.ruben.drealitym">
-
-
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.RECORD_AUDIO"></uses-permission>
-
     <application
-
         android:name=".Notifications.DrealitymApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,7 +13,11 @@
         android:theme="@style/AppTheme">
         <service android:name=".Notifications.ScheduleNotificationsService"
             android:permission="android.permission.BIND_JOB_SERVICE"/>
-        <activity android:name=".UiClasses.DreamDiaryActivity"></activity>
+        <activity
+            android:name=".UiClasses.DreamDiaryActivity"
+            >
+
+        </activity>
         <activity android:name=".UiClasses.SettingsActivity"></activity>
         <activity android:name=".UiClasses.DreamDialogActivity"></activity>
         <activity android:name=".UiClasses.RealityCheckActivity"></activity>
@@ -28,8 +28,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <receiver android:name=".Notifications.AlertReceiver"/> <!--TODO:ist dieser eintrag richtig plaziert ? -->
     </application>
 
 

@@ -70,8 +70,23 @@ public class RealityCheckActivity extends AppCompatActivity implements TimePicke
             @Override
             public void onClick(View view) {
 
-                NotificationScheduler ns = new NotificationScheduler(getBaseContext());
-                ns.scheduleNotification();
+//                NotificationScheduler ns = new NotificationScheduler(getBaseContext());
+//                ns.scheduleNotification();
+
+                ComponentName componentName = new ComponentName(getApplicationContext(), ScheduleNotificationsService.class);
+                JobInfo info = new JobInfo.Builder(1, componentName)
+                        .setPersisted(true) //Job is not lost when rebooting the device
+                        .setMinimumLatency(3 * 1000)
+                        .build();
+                JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+                int resultcode = scheduler.schedule(info);
+                if(resultcode == JobScheduler.RESULT_SUCCESS) {
+                    Log.d(TAG, "onClick: Job scheduled");
+                }else{
+                    Log.d(TAG, "onClick: Job scheduling failed");
+                }
+
+
                 Toast.makeText(RealityCheckActivity.this, "Send Testnotification", Toast.LENGTH_SHORT).show();
 
             }

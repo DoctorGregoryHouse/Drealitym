@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ruben.drealitym.Data.DreamEntry;
 import com.example.ruben.drealitym.R;
@@ -19,6 +20,14 @@ public class DreamDiaryAdapter extends RecyclerView.Adapter<DreamDiaryAdapter.Dr
 
     private List<DreamEntry> Dreams = new ArrayList<>();
     private OnItemClickListener listener;
+
+    public DreamDiaryAdapter(List<DreamEntry> Dreams){
+        this.Dreams = Dreams;
+    }
+
+    public DreamDiaryAdapter(){
+
+    }
 
     @NonNull
     @Override
@@ -80,11 +89,23 @@ public class DreamDiaryAdapter extends RecyclerView.Adapter<DreamDiaryAdapter.Dr
                 }
             });
 
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    int position = getAdapterPosition();
+                    if(listener != null & position != RecyclerView.NO_POSITION){
+                        listener.onItemLongClick(Dreams.get(position));
+                    }
+                    return false;
+                }
+            });
+
         }
     }
 
     public interface OnItemClickListener {
         void onItemClick(DreamEntry entry);
+        void onItemLongClick(DreamEntry entry);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
