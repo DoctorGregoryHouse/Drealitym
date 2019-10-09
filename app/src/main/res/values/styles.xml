@@ -23,6 +23,14 @@
         <item name="cardBackgroundColor">@color/colorPrimary</item>
     </style>
 
+    <style name="DreamCardStyle.Main" parent="CardView.Dark">
+
+        <item name="cardBackgroundColor">#A6200010</item>
+        <item name="android:textColor">#fff</item>
+        <item name="cardCornerRadius">24dp</item>
+    </style>
+
+
     <style name="AppTheme.DarkLila" parent="Theme.AppCompat.NoActionBar">
         <item name="android:textColor">#fff</item>
         <item name="android:textSize">18sp</item>
