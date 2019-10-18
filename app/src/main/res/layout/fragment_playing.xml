@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_dream_dialog_layout_audio"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@null">
 
-    <TextView
-        android:id="@+id/fragment_dream_dialog_tv_audio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/fragment_dream_dialog_add_audio"
-        android:textColor="#fff"
-        android:textSize="16sp"
-        tools:text="ADD AUDIO FILE" />
 
+        <TextView
+            android:id="@+id/fragment_dream_dialog_tv_audio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/fragment_dream_dialog_add_audio"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            tools:text="ADD AUDIO FILE" />
 
-
-
-    <RelativeLayout
-        android:id="@+id/fragment_dream_dialog_layout_audio"
-        android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:layout_below="@+id/fragment_dream_dialog_tv_audio">
+        <ImageButton
+            android:id="@+id/fragment_playing_imgBtn_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@null"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_close_white_24dp" />
 
 
         <ImageButton
@@ -31,7 +34,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="28dp"
+            android:layout_marginEnd="44dp"
+            android:layout_centerVertical="true"
             android:background="@null"
             android:src="@drawable/ic_play_arrow_48dp" />
 
@@ -39,10 +43,14 @@
         <SeekBar
             android:id="@+id/fragment_playing_seekbar"
             android:layout_width="match_parent"
-            android:layout_toStartOf="@id/fragment_playing_imgBtn_play"
-            android:layout_marginEnd="28dp"
-            android:layout_marginStart="8dp"
             android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/fragment_playing_imgBtn_play"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:layout_centerVertical="true" />
 
         <TextView
@@ -57,11 +65,5 @@
             android:text="0:22/1:29"
             android:textSize="20dp"
             tools:text="0:22/1:29" />
-
-
-    </RelativeLayout>
-
-
-
 
 </RelativeLayout>

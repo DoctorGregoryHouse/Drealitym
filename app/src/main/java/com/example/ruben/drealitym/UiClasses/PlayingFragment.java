@@ -8,9 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.ruben.drealitym.R;
 
@@ -32,10 +32,12 @@ public class PlayingFragment extends Fragment {
     private SeekBar mSeekBar;
     private ImageButton iBtnPlay;
     private TextView tvPlayTime;
+    private ImageView ivClose;
 
     private MediaPlayer mPlayer;
     private boolean isPlaying = false;
     private String mFilePath;
+    private long audioLength;
 
     private Handler mSeekBarUpdateHandler;
     private Runnable mUpdateSeekBar = new Runnable() {
@@ -65,6 +67,7 @@ public class PlayingFragment extends Fragment {
         tvPlayTime = v.findViewById(R.id.fragment_playing_tv_play_time);
         iBtnPlay = v.findViewById(R.id.fragment_playing_imgBtn_play);
         mSeekBar = v.findViewById(R.id.fragment_playing_seekbar);
+        ivClose = v.findViewById(R.id.fragment_playing_imgBtn_close);
 
         return  v;
 
@@ -74,11 +77,15 @@ public class PlayingFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        tvPlayTime = view.findViewById(R.id.fragment_playing_tv_play_time);
+
         mSeekBarUpdateHandler = new Handler();
         mPlayer = new MediaPlayer();
         try {
             mPlayer.setDataSource(mFilePath);
             mPlayer.prepare();
+            audioLength = mPlayer.getDuration();
+
 
             initializeSeekBar();
 
@@ -106,6 +113,31 @@ public class PlayingFragment extends Fragment {
                 if(mPlayer!=null && fromUser){
                     mPlayer.seekTo(progress);
                 }
+
+                int minutes_2 = (progress / 1000) / 60;
+                int seconds_2 = ((progress /1000) % 60);
+                StringBuilder builder = new StringBuilder();
+                builder.append(minutes_2);
+                if (seconds_2 < 10) {
+                    builder.append(":0");
+                }else{
+                    builder.append(":");
+                }
+                builder.append(seconds_2);
+                builder.append("/");
+                int minutes_1 = (int) (audioLength / 1000) / 60;
+                int seconds_1 = (int) ((audioLength/1000) % 60);
+                builder.append(minutes_1);
+                if (seconds_1 < 10) {
+                    builder.append(":0");
+                }else{
+                    builder.append(":");
+                }
+                builder.append(seconds_1);
+
+
+                tvPlayTime.setText(builder.toString());
+
             }
 
             @Override
@@ -128,6 +160,18 @@ public class PlayingFragment extends Fragment {
             }
         });
 
+        int minutes = (int) (audioLength / 1000) / 60;
+        int seconds = (int) ((audioLength/1000) % 60);
+        StringBuilder builder = new StringBuilder();
+        builder.append("0:00/");
+        builder.append(minutes);
+        if (seconds < 10) {
+            builder.append(":0");
+        }else{
+            builder.append(":");
+        }
+        builder.append(seconds);
+        tvPlayTime.setText(builder.toString());
 
 
     }
@@ -135,7 +179,6 @@ public class PlayingFragment extends Fragment {
     private void startPlaying() {
         mPlayer.start();
         isPlaying = true;
-        Toast.makeText(getContext(), "Playing started", Toast.LENGTH_SHORT).show();
         iBtnPlay.setImageResource(R.drawable.ic_pause_48dp);
         mSeekBarUpdateHandler.postDelayed(mUpdateSeekBar,0);
     }

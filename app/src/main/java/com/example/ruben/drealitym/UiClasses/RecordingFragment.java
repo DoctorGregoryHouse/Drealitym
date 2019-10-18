@@ -13,8 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.ruben.drealitym.R;
 
 import java.io.File;
@@ -122,8 +120,6 @@ public class RecordingFragment extends Fragment {
         iBtnRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "RecordButton Clicked...", Toast.LENGTH_SHORT).show();
-
                 //request permission to use microphone
                 ActivityCompat.requestPermissions(getActivity(), permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
@@ -163,7 +159,6 @@ public class RecordingFragment extends Fragment {
         }
         mRecorder.start();
         iBtnRecord.setImageResource(R.drawable.ic_mic_lila_48dp);
-        Toast.makeText(getContext(), "Recording started", Toast.LENGTH_SHORT).show();
         isRecording =true;
 
         //starts the updateTimerThread to count the recording time
