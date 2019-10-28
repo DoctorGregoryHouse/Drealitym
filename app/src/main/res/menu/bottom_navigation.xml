@@ -17,9 +17,9 @@
         android:title="remind"/>
 
     <item
-        android:id="@+id/nav_wiki"
-        android:icon="@drawable/ic_menu_wiki_white_24dp"
-        android:title="Dream wiki"/>
+        android:id="@+id/nav_settings"
+        android:icon="@drawable/ic_settings_white_24dp"
+        android:title="Settings"/>
 
 
 

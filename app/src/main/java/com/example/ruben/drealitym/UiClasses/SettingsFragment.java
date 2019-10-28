@@ -11,17 +11,17 @@ import androidx.fragment.app.Fragment;
 
 import com.example.ruben.drealitym.R;
 
-public class ProfileUserFragment extends Fragment {
 
-    public ProfileUserFragment(){
-        //mandatory constructor
-    }
+public class SettingsFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_profile_user, container, false);
+        View v = inflater.inflate(R.layout.fragment_settings,container,false);
         return v;
     }
+
+
+    //FAQ, about(share), reset, language
 }

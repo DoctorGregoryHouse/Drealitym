@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/list_item_divider_1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#fff"/>
+
+    <TextView
+        android:id="@+id/list_item_tv_day"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/list_item_divider_1"
+        android:padding="16dp"
+        android:textSize="22sp"
+        android:text="Sunday"/>
+
+    <TextView
+        android:id="@+id/list_item_divider_2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/list_item_tv_day"
+        android:layout_marginStart="40dp"
+        android:background="#fff"/>
+
+    <TextView
+        android:id="@+id/list_item_tv_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/list_item_divider_2"
+        android:layout_marginStart="40dp"
+        android:padding="8dp"
+        android:textSize="20sp"
+        android:text="Start"/>
+
+
+    <TextView
+        android:id="@+id/list_item_divider_3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/list_item_tv_start"
+        android:layout_marginStart="40dp"
+        android:background="#fff"/>
+
+    <TextView
+        android:id="@+id/list_item_tv_stop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_below="@id/list_item_divider_3"
+        android:padding="8dp"
+        android:textSize="20sp"
+        android:text="Stop"/>
+
+    <TextView
+        android:id="@+id/list_item_divider_4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/list_item_tv_stop"
+        android:layout_marginStart="40dp"
+        android:background="#fff"/>
+
+    <TextView
+        android:id="@+id/list_item_tv_interval"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/list_item_divider_4"
+        android:layout_marginStart="40dp"
+        android:padding="8dp"
+        android:textSize="20sp"
+        android:text="Interval"/>
+
+    <TextView
+        android:id="@+id/list_item_tv_interval_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/list_item_divider_4"
+        android:layout_marginStart="232dp"
+        android:layout_marginEnd="16dp"
+        android:padding="8dp"
+        android:textSize="20sp"
+        android:text="Interval"/>
+
+</RelativeLayout>

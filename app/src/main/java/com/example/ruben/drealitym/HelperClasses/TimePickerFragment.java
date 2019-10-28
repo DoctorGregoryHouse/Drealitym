@@ -47,6 +47,7 @@ public class TimePickerFragment extends DialogFragment {
         }
 
         //this creates the Dialog with the corresponding timeFormat set in the phone settings
+
         return new TimePickerDialog(getActivity(),(TimePickerDialog.OnTimeSetListener) getActivity(),hour,minute,true /*DateFormat.is24HourFormat(getActivity())*/);
     }
 }

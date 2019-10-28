@@ -7,22 +7,39 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         style="@style/DreamCardStyle">
+
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/fragment_reality_check_tv_message"
+            android:layout_margin="12dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Enable Notifications for Realitychecks"
             android:textColor="#fff"
-            android:textSize="16sp"
-            android:layout_gravity="center"/>
-        <Switch
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"/>
+            android:textSize="22sp"
+            android:text="No Notifications outstanding, your reality checks are disabled"/>
+
     </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                style="@style/DreamCardStyle">
+
+                <Switch
+                    android:id="@+id/fragment_reality_check_sw_enable"
+                    android:layout_margin="8dp"
+                    android:text="Enable Reality checks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="22sp"/>
+            </androidx.cardview.widget.CardView>
 
 
     <androidx.cardview.widget.CardView
@@ -41,15 +58,6 @@
             android:divider="@drawable/background_shape_lila"/>
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="8dp"
-        android:text="My Notification Statistics"
-        android:textColor="#fff"/>
-
-
     <Button
         android:id="@+id/activity_reality_check_send_notification_button"
         android:layout_width="90dp"
@@ -57,6 +65,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginStart="8dp"
         android:text="test"/>
+
+
 
 
 </LinearLayout>

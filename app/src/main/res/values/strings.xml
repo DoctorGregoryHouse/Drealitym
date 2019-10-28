@@ -31,8 +31,7 @@
     <!--RealityCheckActivity-->
 
     <string-array name="spinner_values_intervals">
-        <item>Choose your interval !</item>
-        <item>Every half hour</item>
+        <!--TODO: check for correct values -->
         <item>Every hour</item>
         <item>Every 2 hours</item>
         <item>Every 3 hours</item>

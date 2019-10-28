@@ -13,11 +13,7 @@
         android:theme="@style/AppTheme">
         <service android:name=".Notifications.ScheduleNotificationsService"
             android:permission="android.permission.BIND_JOB_SERVICE"/>
-        <activity
-            android:name=".UiClasses.DreamDiaryActivity"
-            >
-
-        </activity>
+        <activity android:name=".UiClasses.LibraryActivity"></activity>
         <activity android:name=".UiClasses.SettingsActivity"></activity>
         <activity android:name=".UiClasses.DreamDialogActivity"></activity>
         <activity android:name=".UiClasses.RealityCheckActivity"></activity>

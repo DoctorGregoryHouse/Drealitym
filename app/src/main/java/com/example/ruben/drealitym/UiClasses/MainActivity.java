@@ -8,20 +8,20 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TimePicker;
 
 import com.example.ruben.drealitym.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
-public class MainActivity extends  FragmentActivity {
+public class MainActivity extends  FragmentActivity  {
 
     private static final String TAG = "MainActivtiy";
-
-    private CardView cvRealityChecks, cvAddDream, cvDreamDiary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +31,12 @@ public class MainActivity extends  FragmentActivity {
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation_bar);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
+        Fragment HomeFragment = new HomeFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main_container, HomeFragment).commit();
+
+
+
     }
-
-
-
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -51,14 +53,15 @@ public class MainActivity extends  FragmentActivity {
                             break;
 
                         case R.id.nav_home:
+                            selectedFragment = new HomeFragment();
                             break;
 
                         case R.id.nav_reminders:
-                            //selectedFragment = new DreamDiaryFragment();
+                            selectedFragment = new RealityCheckFragment();
                             break;
 
-                        case R.id.nav_wiki:
-                            //selectedFragment = new DreamDiaryFragment();
+                        case R.id.nav_settings:
+                            selectedFragment = new SettingsFragment();
                             break;
 
 
@@ -68,34 +71,3 @@ public class MainActivity extends  FragmentActivity {
                 }
             };
 }
-
-
-
-
-//        cvRealityChecks = findViewById(R.id.activity_main_cv_realty_check);
-//        cvRealityChecks.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, RealityCheckActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//
-//        cvAddDream = findViewById(R.id.activity_main_cv_add_dream);
-//        cvAddDream.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, DreamDialogActivity.class);
-//                intent.putExtra(DreamDialogActivity.EXTRA_REQUEST_CODE,DreamDialogActivity.REQUEST_CODE_NEW_ENTRY);
-//                startActivity(intent);
-//            }
-//        });
-//
-//        cvDreamDiary = findViewById(R.id.activity_main_cv_dream_diary);
-//        cvDreamDiary.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, DreamDiaryActivity.class);
-//                startActivity(intent);
-//            }
-//        });
