@@ -2,26 +2,21 @@ package com.example.ruben.drealitym.UiClasses;
 
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TimePicker;
 
 import com.example.ruben.drealitym.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
-public class MainActivity extends  FragmentActivity  {
+public class MainActivity extends  FragmentActivity {
 
     private static final String TAG = "MainActivtiy";
+
+    Fragment selectedFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +39,7 @@ public class MainActivity extends  FragmentActivity  {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-                    Fragment selectedFragment = null;
+                    selectedFragment = null;
 
                     switch (menuItem.getItemId()) {
 
@@ -70,4 +65,5 @@ public class MainActivity extends  FragmentActivity  {
                     return true;
                 }
             };
+
 }

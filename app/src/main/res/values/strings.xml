@@ -61,6 +61,6 @@
     <string name="fragment_dream_dialog_add_audio">ADD AUDIO FILE</string>
     <string name="fragment_dream_dialog_text_hint">Here you can start typing your dream...</string>
 
-
+    <string name="preference_file_reality_check">com.example.ruben.drealitym.UiClasses.preferencesRealityCheck</string>
 
 </resources>
