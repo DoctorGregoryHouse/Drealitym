@@ -25,7 +25,6 @@ import com.example.ruben.drealitym.Data.RealityCheckEntry;
 import com.example.ruben.drealitym.Data.RealityCheckViewModel;
 import com.example.ruben.drealitym.HelperClasses.CustomExpandableListAdapter;
 import com.example.ruben.drealitym.HelperClasses.TimePickerFragment;
-import com.example.ruben.drealitym.Notifications.NotificationScheduler;
 import com.example.ruben.drealitym.Notifications.ScheduleNotificationsService;
 import com.example.ruben.drealitym.R;
 
@@ -70,8 +69,7 @@ public class RealityCheckActivity extends AppCompatActivity implements TimePicke
             @Override
             public void onClick(View view) {
 
-//                NotificationScheduler ns = new NotificationScheduler(getBaseContext());
-//                ns.scheduleNotification();
+
 
                 ComponentName componentName = new ComponentName(getApplicationContext(), ScheduleNotificationsService.class);
                 JobInfo info = new JobInfo.Builder(1, componentName)

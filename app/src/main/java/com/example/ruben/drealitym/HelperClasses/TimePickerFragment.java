@@ -16,24 +16,21 @@ import androidx.fragment.app.DialogFragment;
 import com.example.ruben.drealitym.R;
 import com.example.ruben.drealitym.UiClasses.RealityCheckFragment;
 
+import static com.example.ruben.drealitym.UiClasses.RealityCheckFragment.ARGS_SELECTOR;
+import static com.example.ruben.drealitym.UiClasses.RealityCheckFragment.ARGS_START_HOUR;
+import static com.example.ruben.drealitym.UiClasses.RealityCheckFragment.ARGS_START_MINUTE;
+import static com.example.ruben.drealitym.UiClasses.RealityCheckFragment.ARGS_STOP_HOUR;
+import static com.example.ruben.drealitym.UiClasses.RealityCheckFragment.ARGS_STOP_MINUTE;
+import static com.example.ruben.drealitym.UiClasses.RealityCheckFragment.TIMEPICKER_START;
+import static com.example.ruben.drealitym.UiClasses.RealityCheckFragment.TIMEPICKER_STOP;
+
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
 
     int hour = 10;
     int minute = 10;
 
-    //CONSTANTS
-    private static final String LOG_TAG = "TimePickerFragment";
+    public static final String LOG_TAG = "TimePickerFragment";
 
-    private static final String ARGS_START_HOUR =
-            "com.example.ruben.drealitym.uiclasses.start.hour";
-    private static final String ARGS_START_MINUTE =
-            "com.example.ruben.drealitym.uiclasses.start.minute";
-    private static final String ARGS_STOP_HOUR =
-            "com.example.ruben.drealitym.uiclasses.stop.hour";
-    private static final String ARGS_STOP_MINUTE =
-            "com.example.ruben.drealitym.uiclasses.stop.minute";
-
-    private SharedPreferences sharedPrefs;
     private DialogInterface.OnDismissListener onDismissListener;
 
     @NonNull
@@ -43,23 +40,19 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         Log.d(LOG_TAG,"onCreateDialog: called...");
 
 
-        sharedPrefs = getContext().getSharedPreferences(
-                getString(R.string.preference_file_reality_check), Context.MODE_PRIVATE);
-
-
         //check for the bundle to exist, it should contain the start or stop time depending on what childItem is clicked on
         //TODO: update values
-//        if (getArguments() != null) {
-//            if (getArguments().getInt(ARGS_STOP_HOUR) == -1) {
-//                hour = getArguments().getInt(ARGS_START_HOUR);
-//                minute = getArguments().getInt(ARGS_START_MINUTE);
-//
-//            }
-//            if (getArguments().getInt(ARGS_START_HOUR) == -1) {
-//                hour = getArguments().getInt(ARGS_STOP_HOUR);
-//                minute = getArguments().getInt(ARGS_STOP_MINUTE);
-//            }
-//        }
+        if (getArguments() != null) {
+            if (getArguments().getInt(ARGS_SELECTOR) == TIMEPICKER_START) {
+                hour = getArguments().getInt(ARGS_START_HOUR);
+                minute = getArguments().getInt(ARGS_START_MINUTE);
+
+            }else if(getArguments().getInt(ARGS_SELECTOR) == TIMEPICKER_STOP){
+                hour = getArguments().getInt(ARGS_STOP_HOUR);
+                minute = getArguments().getInt(ARGS_STOP_MINUTE);
+
+            }
+        }
 
 
 
@@ -87,7 +80,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
 
 
-        sharedPrefs = getContext().getSharedPreferences(
+        SharedPreferences sharedPrefs = getContext().getSharedPreferences(
                 getString(R.string.preference_file_reality_check), Context.MODE_PRIVATE);
 
         SharedPreferences.Editor editor = sharedPrefs.edit();

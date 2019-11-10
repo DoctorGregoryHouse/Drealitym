@@ -14,16 +14,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -35,21 +34,37 @@ import com.example.ruben.drealitym.HelperClasses.TimePickerFragment;
 import com.example.ruben.drealitym.Notifications.ScheduleNotificationsService;
 import com.example.ruben.drealitym.R;
 
-import java.sql.Time;
 import java.util.List;
 
 import static android.content.Context.JOB_SCHEDULER_SERVICE;
-
 public class RealityCheckFragment extends Fragment {
 
     private static final String TAG = "RealityCheckFragment";
     public static final int GET_NOTIFIED = 1;
     public static final int DONT_GET_NOTIFIED = 2;
+    public static final int JOB_NOTIFICATION_SCHEDULER = 1;
 
+    //CONSTANTS FOR THE SHARED_PREFERENCES
     public static final String START_HOUR = "start_hour";
     public static final String START_MINUTE = "start_minute";
     public static final String STOP_HOUR = "stop_hour";
     public static final String STOP_MINUTE = "stop_minute";
+    public static final String ENABLE_REALITY_CHECKS = "enable_reality_checks";
+
+    //CONSTANTS FOR THE BUNDLE FOR THE TIMEPICKER
+    public static final String ARGS_START_HOUR =
+            "com.example.ruben.drealitym.uiclasses.start.hour";
+    public static final String ARGS_START_MINUTE =
+            "com.example.ruben.drealitym.uiclasses.start.minute";
+    public static final String ARGS_STOP_HOUR =
+            "com.example.ruben.drealitym.uiclasses.stop.hour";
+    public static final String ARGS_STOP_MINUTE =
+            "com.example.ruben.drealitym.uiclasses.stop.minute";
+    public static final String ARGS_SELECTOR ="" +
+            "com.example.ruben.drealitym.uiclasses.selector";
+    public static final int TIMEPICKER_START = 1;
+    public static final int TIMEPICKER_STOP = 2;
+
 
     private ExpandableListView listview;
     private List<String> exlvTitleStrings;
@@ -98,7 +113,6 @@ public class RealityCheckFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Context context = getActivity();
 //
 //        exlvTitleStrings = new ArrayList<>();
 //
@@ -111,11 +125,43 @@ public class RealityCheckFragment extends Fragment {
 //        exlvTitleStrings.add("Friday");
 //        exlvTitleStrings.add("Saturday");
 
+        //set the initial state of the switch
+        SharedPreferences sharedPrefs = getContext().getSharedPreferences(
+                getString(R.string.preference_file_reality_check), Context.MODE_PRIVATE);
+        boolean switchState = sharedPrefs.getBoolean(ENABLE_REALITY_CHECKS, false);
+        swEnableRealityChecks.setChecked(switchState);
+
         initializeClickListeners();
+
+        if(swEnableRealityChecks.isActivated()){
+            initializeNotificationSchedulerJob();
+        }else {
+            killNotificationJobs();
+        }
 
     }
 
     private void initializeClickListeners(){
+
+        swEnableRealityChecks.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                SharedPreferences sharedPrefs = getContext().getSharedPreferences(
+                        getString(R.string.preference_file_reality_check), Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPrefs.edit();
+
+                editor.putBoolean(ENABLE_REALITY_CHECKS , b);
+                editor.commit();
+
+                if(b == true){
+                    initializeNotificationSchedulerJob();
+                }
+                else {
+                    killNotificationJobs();
+                }
+            }
+        });
 
         sendTestNotification.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,7 +170,7 @@ public class RealityCheckFragment extends Fragment {
                 ComponentName componentName = new ComponentName(getActivity().getApplication(), ScheduleNotificationsService.class);
                 JobInfo info = new JobInfo.Builder(1, componentName)
                         .setPersisted(true) //Job is not lost when rebooting the device
-                        .setMinimumLatency(3 * 1000)
+                        .setMinimumLatency(1 * 1000)
                         .build();
                 JobScheduler scheduler = (JobScheduler) getActivity().getSystemService(JOB_SCHEDULER_SERVICE);
                 int resultcode = scheduler.schedule(info);
@@ -146,7 +192,7 @@ public class RealityCheckFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                initiateTimePickerListener(1);
+                initiateTimePickerListener(TIMEPICKER_START);
 
             }
         });
@@ -154,7 +200,7 @@ public class RealityCheckFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                initiateTimePickerListener(2);
+                initiateTimePickerListener(TIMEPICKER_STOP);
 
             }
         });
@@ -201,8 +247,24 @@ public class RealityCheckFragment extends Fragment {
     }
 
     private void initiateTimePickerListener(int selector){
+
+        SharedPreferences sharedPrefs = getContext().getSharedPreferences(
+                getString(R.string.preference_file_reality_check), Context.MODE_PRIVATE);
+
+
+        int startHour = sharedPrefs.getInt(START_HOUR,-1);
+        int startMinute = sharedPrefs.getInt(START_MINUTE, -1);
+
+        int stopHour = sharedPrefs.getInt(STOP_HOUR, -1);
+        int stopMinute = sharedPrefs.getInt(STOP_MINUTE, -1);
+
         Bundle bundle = new Bundle();
-        bundle.putInt("selector",selector);
+        bundle.putInt(ARGS_SELECTOR, selector);
+        bundle.putInt(ARGS_START_MINUTE, startMinute);
+        bundle.putInt(ARGS_START_HOUR, startHour);
+        bundle.putInt(ARGS_STOP_MINUTE, stopMinute);
+        bundle.putInt(ARGS_STOP_HOUR, stopHour);
+
         TimePickerFragment dialog = new TimePickerFragment();
         dialog.setArguments(bundle);
         if (selector == 2){
@@ -232,23 +294,20 @@ public class RealityCheckFragment extends Fragment {
             builder.append("0");
         }
         builder.append(minute);
-
         return builder.toString();
-
     }
 
     public void updateTextViews(){
-
 
         SharedPreferences sharedPrefs = getContext().getSharedPreferences(
                 getString(R.string.preference_file_reality_check), Context.MODE_PRIVATE);
 
 
-        int startHour = sharedPrefs.getInt(START_HOUR,8);
-        int startMinute = sharedPrefs.getInt(START_MINUTE, 0);
+        int startHour = sharedPrefs.getInt(START_HOUR,-1);
+        int startMinute = sharedPrefs.getInt(START_MINUTE, -1);
 
-        int stopHour = sharedPrefs.getInt(STOP_HOUR, 21);
-        int stopMinute = sharedPrefs.getInt(STOP_MINUTE, 0);
+        int stopHour = sharedPrefs.getInt(STOP_HOUR, -1);
+        int stopMinute = sharedPrefs.getInt(STOP_MINUTE, -1);
 
         tvStart.setText(formatTime(startHour,startMinute));
         tvStop.setText(formatTime(stopHour, stopMinute));
@@ -257,8 +316,33 @@ public class RealityCheckFragment extends Fragment {
 
     }
 
+    private void initializeNotificationSchedulerJob(){
 
-    //old code
+        ComponentName componentName = new ComponentName(getActivity().getApplication(), ScheduleNotificationsService.class);
+        JobInfo info = new JobInfo.Builder(JOB_NOTIFICATION_SCHEDULER, componentName)
+                .setPersisted(true) //Job is not lost when rebooting the device
+                .setOverrideDeadline(0)
+                .build();
+
+        JobScheduler scheduler = (JobScheduler) getActivity().getSystemService(JOB_SCHEDULER_SERVICE);
+        int resultcode = scheduler.schedule(info);
+        if (resultcode == JobScheduler.RESULT_SUCCESS) {
+            Log.d(TAG, "onClick: Job scheduled");
+        } else {
+            Log.d(TAG, "onClick: Job scheduling failed");
+        }
+    }
+
+    private void killNotificationJobs(){
+        //this kills all jobs hence there are only the notification jobs
+        JobScheduler jobScheduler = (JobScheduler) getActivity().getSystemService(JOB_SCHEDULER_SERVICE);
+        jobScheduler.cancelAll();
+    }
+
+
+
+
+    //deprecated
     private void initializeAdapter(final CustomExpandableListAdapter adapter) {
 
         viewModel = ViewModelProviders.of(this).get(RealityCheckViewModel.class);
@@ -355,7 +439,6 @@ public class RealityCheckFragment extends Fragment {
         });
 
     }
-
     private void updateIntervalInDatabase(int groupPosition, int interval) {
         RealityCheckEntry oldEntry = realityCheckEntries.get(groupPosition);
         RealityCheckEntry newEntry = new RealityCheckEntry(oldEntry.getStartHour(),
@@ -367,5 +450,6 @@ public class RealityCheckFragment extends Fragment {
         newEntry.setId(groupPosition + 1);
         viewModel.update(newEntry);
     }
+
 
 }

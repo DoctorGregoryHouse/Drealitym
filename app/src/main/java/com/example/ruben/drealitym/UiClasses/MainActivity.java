@@ -5,6 +5,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -14,7 +16,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends  FragmentActivity {
 
+    //CONSTANTS
     private static final String TAG = "MainActivtiy";
+
 
     Fragment selectedFragment;
 
@@ -29,7 +33,7 @@ public class MainActivity extends  FragmentActivity {
         Fragment HomeFragment = new HomeFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main_container, HomeFragment).commit();
 
-
+        initiateSharedPrefs();
 
     }
 
@@ -66,4 +70,29 @@ public class MainActivity extends  FragmentActivity {
                 }
             };
 
+    private void initiateSharedPrefs(){
+
+        SharedPreferences sharedPrefs = getApplication().getSharedPreferences(
+                getString(R.string.preference_file_reality_check), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+
+        if(!(sharedPrefs.contains(RealityCheckFragment.START_HOUR) || sharedPrefs.contains(RealityCheckFragment.START_MINUTE))){
+            editor.putInt(RealityCheckFragment.START_HOUR, 8);
+
+
+            editor.putInt(RealityCheckFragment.START_MINUTE,0);
+            editor.commit();
+        }
+
+        if(!(sharedPrefs.contains(RealityCheckFragment.STOP_HOUR) || sharedPrefs.contains(RealityCheckFragment.STOP_MINUTE))){
+            editor.putInt(RealityCheckFragment.STOP_HOUR, 21);
+            editor.putInt(RealityCheckFragment.STOP_MINUTE,0);
+            editor.commit();
+        }
+
+        if(!(sharedPrefs.contains(RealityCheckFragment.ENABLE_REALITY_CHECKS))){
+            editor.putBoolean(RealityCheckFragment.ENABLE_REALITY_CHECKS, false);
+            editor.commit();
+        }
+    }
 }
